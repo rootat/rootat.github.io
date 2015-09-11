@@ -146,6 +146,79 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/11/bruter/" itemprop="url">
+                Python黑帽子:暴力破解目录和文件位置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-11T15:12:17+08:00" content="2015-09-11">
+            2015-09-11
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/11/bruter/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/11/bruter/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<ul>
+<li>实际测试中，速度体验不佳，性能有待提升。</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> Queue</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line">threads = <span class="number">50</span></span><br><span class="line">target_url = <span class="string">"http://testphp.vulnweb.com"</span>	<span class="comment">#测试网站</span></span><br><span class="line"></span><br><span class="line">wordlist_file = <span class="string">"test.txt"</span>	</span><br><span class="line">resume = <span class="keyword">None</span></span><br><span class="line">user_agent = <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_wordlist</span><span class="params">(wordlist_file)</span>:</span></span><br><span class="line">	</span><br><span class="line">	fd = open(wordlist_file,<span class="string">"rb"</span>)</span><br><span class="line">	raw_words = fd.readlines()	<span class="comment">#读取字典</span></span><br><span class="line">	fd.close()</span><br><span class="line">	</span><br><span class="line">	found_resume = <span class="keyword">False</span></span><br><span class="line">	words = Queue.Queue()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> word <span class="keyword">in</span> raw_words:</span><br><span class="line">		word = word.rstrip()</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> resume <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">			<span class="keyword">if</span> found_resume:</span><br><span class="line">				words.put(word) </span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				<span class="keyword">if</span> word == resume:</span><br><span class="line">					found_resume = <span class="keyword">True</span></span><br><span class="line">					<span class="keyword">print</span> <span class="string">"Resuming wordlist from : %s "</span> % resume</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			words.put(word)</span><br><span class="line">			</span><br><span class="line">	<span class="keyword">return</span> words</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dir_bruter</span><span class="params">(word_queue,extensions=None)</span>:</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> word_queue.empty():</span><br><span class="line">		attempt = word_queue.get()</span><br><span class="line">		</span><br><span class="line">		attempt_list = []</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> <span class="string">"."</span> <span class="keyword">not</span> <span class="keyword">in</span> attempt: <span class="comment">#如果为目录，自动加上/</span></span><br><span class="line">			attempt_list.append(<span class="string">"/%s/"</span> % attempt)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			attempt_list.append(<span class="string">"/%s"</span> % attempt)</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">if</span> extensions:</span><br><span class="line">			<span class="keyword">for</span> extension <span class="keyword">in</span> extensions:</span><br><span class="line">				attempt_list.append(<span class="string">"/%s%s"</span> % (attempt,extension))</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">for</span> brute <span class="keyword">in</span> attempt_list:</span><br><span class="line">			url = <span class="string">"%s%s"</span> % (target_url,urllib.quote(brute))</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				headers = &#123;&#125; <span class="comment">#HTTP头</span></span><br><span class="line">				headers[<span class="string">"User-Agent"</span>] = user_agent</span><br><span class="line">				r = urllib2.Request(url,headers=headers)</span><br><span class="line">				</span><br><span class="line">				response = urllib2.urlopen(r)</span><br><span class="line">				</span><br><span class="line">				response = urllib2.urlopen(r)</span><br><span class="line">				</span><br><span class="line">				<span class="keyword">if</span> len(response.read()):</span><br><span class="line">					<span class="keyword">print</span> <span class="string">"[%d] =&gt; %s"</span> % (response.code,url)</span><br><span class="line">					</span><br><span class="line">			<span class="keyword">except</span> urllib2.URLError,e:</span><br><span class="line">				<span class="keyword">if</span> hasattr(e,<span class="string">'code'</span>) <span class="keyword">and</span> e.code != <span class="number">404</span>:</span><br><span class="line">					<span class="keyword">print</span> <span class="string">"!!! %d =&gt; %s"</span> % (e.code,url)</span><br><span class="line">				<span class="keyword">pass</span></span><br><span class="line">				</span><br><span class="line">				</span><br><span class="line">word_queue = build_wordlist(wordlist_file)</span><br><span class="line">extensions = [<span class="string">".php"</span>,<span class="string">".bak"</span>,<span class="string">".orig"</span>,<span class="string">".inc"</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(threads):</span><br><span class="line">	t = threading.Thread(target=dir_bruter,args=(word_queue,extensions,))</span><br><span class="line">	t.start()</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/10/ARPPoison/" itemprop="url">
                 Python黑帽子:利用Scapy进行ARP缓存投毒
               </a>
@@ -463,7 +536,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
