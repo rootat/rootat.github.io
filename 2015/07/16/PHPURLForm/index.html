@@ -37,13 +37,13 @@
 
 <meta name="description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP记录URL、表单内容.docx">
+<meta property="og:title" content="PHP记录URL、表单内容">
 <meta property="og:url" content="http://www.rootat.net/2015/07/16/PHPURLForm/index.html">
 <meta property="og:site_name" content="root@Zeroh">
 <meta property="og:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
-<meta property="og:updated_time" content="2016-03-09T07:57:37.585Z">
+<meta property="og:updated_time" content="2016-03-09T07:58:56.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP记录URL、表单内容.docx">
+<meta name="twitter:title" content="PHP记录URL、表单内容">
 <meta name="twitter:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
 
 
@@ -54,7 +54,7 @@
   };
 </script>
 
-  <title> PHP记录URL、表单内容.docx | root@Zeroh </title>
+  <title> PHP记录URL、表单内容 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -145,7 +145,7 @@
           
           
             
-              PHP记录URL、表单内容.docx
+              PHP记录URL、表单内容
             
           
         </h1>
@@ -372,7 +372,7 @@ fclose(<span class="variable">$fp</span>);
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
       var disqus_identifier = '2015/07/16/PHPURLForm/';
-      var disqus_title = 'PHP记录URL、表单内容.docx';
+      var disqus_title = 'PHP记录URL、表单内容';
       var disqus_url = 'http://www.rootat.net/2015/07/16/PHPURLForm/';
 
       function run_disqus_script(disqus_script){
