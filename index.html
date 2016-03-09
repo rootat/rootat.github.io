@@ -188,7 +188,7 @@
 <blockquote>
 <p>GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“<strong>双字节</strong>”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。</p>
 </blockquote>
-<p>首先，字符集编码处理不一致除了导致XSS，还常常导致SQL注入，命令执行等一系列安全问题。</p>
+<p>首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。</p>
 <p>比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？</p>
 <pre><code><span class="xml"><span class="php"><span class="preprocessor">&lt;?php</span> header(“Content-Type: text/html;charset=GBK”);<span class="preprocessor">?&gt;</span></span>
 <span class="tag">&lt;<span class="title">head</span>
