@@ -546,7 +546,8 @@ fclose(<span class="variable">$fp</span>);
 
       
         
-          <span itemprop="articleBody"><p>密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，ruby编写的一款程序，可以分析出密码频率TOP N。但使用中发现效率较低。<br>实际上通过简单的bash命令就可以实现上述的功能：</p>
+          <span itemprop="articleBody"><p>由于密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，由ruby编写的一款程序，可以分析出密码频率TOP N。但实际使用中发现效率较低。</p>
+<p>实际上通过简单的bash命令就可以实现上述的功能：</p>
 <pre><code>cat password.txt |<span class="string"> sort </span>|<span class="string"> uniq -c </span>|<span class="string"> sort -k1,1nr </span>|<span class="string"> head -10</span>
 </code></pre><p>提取password词频TOP10的密码</p>
 <p><code>time cat pass.txt | sort | uniq -c | sort -k1,1nr | head -10 &gt;</code> result.txt<br>保存提取结果并记录所消耗时间</p>
