@@ -47,7 +47,7 @@ WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fu
 
 WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。
 在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现">
-<meta property="og:updated_time" content="2016-03-10T03:04:05.631Z">
+<meta property="og:updated_time" content="2016-03-10T03:15:26.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WEB Fuzz中需要关注的7种响应">
 <meta name="twitter:description" content="WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。
@@ -232,6 +232,7 @@ WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fu
 <p>处理或未被处理的异常</p>
 </blockquote>
 <p>当对WEB应用进行Fuzz时，可能会在应用本身以及它运行的服务器上都发现漏洞。因此，监视服务器多的状态也很重要。尽管WEB服务器返回的响应信息为我们提供了发现潜在漏洞的信息，但它们并没有揭示全部问题。如果输入稍加变化，Fuzz请求极可能会导致处理或未被处理的异常，从而导致可被利用的条件。因此，在Fuzz过程中，建议在目标WEB服务器上连接一个单独的调试器，这样就能够识别这些异常，比如FileFuzz和COMRaider，都带有内置的调试功能。WEB Fuzzer并不需要调试功能呢，因为WEB Fuzzer不需要反复地启动和中止一个应用。我们的方法是向某个Web应用发送一系列的fuzz请求，服务器会持续运行并相应这些请求，并阻止导致Dos的输入。</p>
+<p>参考：《模糊测试》</p>
 </span>
       
     </div>
