@@ -47,7 +47,7 @@ WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fu
 
 WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。
 在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现">
-<meta property="og:updated_time" content="2016-03-10T02:59:16.730Z">
+<meta property="og:updated_time" content="2016-03-10T03:02:06.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WEB Fuzz中需要关注的7种响应">
 <meta name="twitter:description" content="WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。
@@ -194,7 +194,7 @@ WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fu
 </blockquote>
 <p>WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。</p>
 <p>在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现了异常，就可以确定于异常相关的请求。下面总结了一些响应信息，这些响应信息可能指示漏洞条件的存在：</p>
-<ul>
+<ol>
 <li>HTML状态码 </li>
 <li>响应中的错误信息 </li>
 <li>响应中包含的用户输入 </li>
@@ -202,48 +202,34 @@ WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fu
 <li>请求超时 </li>
 <li>WEB Fuzzer错误信息 </li>
 <li>处理或者未处理的异常</li>
-</ul>
+</ol>
 <p>下面分别详细展开讨论：</p>
 <blockquote>
-<ol>
-<li>HTML状态码</li>
-</ol>
+<p>HTML状态码</p>
 </blockquote>
 <p>HTML状态码是一种重要信息，它提供了快速判断对应的请求是成功还是失败的指示。因此，WEB Fuzzer解析原始响应，得到状态码，然后在一个显示响应详细信息的列表中将其单独展示出来。通过THML状态码信息，用户能够快速确定需要进一步详细检查的响应部分。</p>
 <blockquote>
-<ol>
-<li>响应中的错误信息</li>
-</ol>
+<p>响应中的错误信息</p>
 </blockquote>
 <p>从设计上来说，WEB服务器一般都会在动态生成的网页中包含错误信息。如果一个WEB服务器在生产环节中启动不当，启用了调试功能，就会发生这种情况。以下是一个典型的透露了太懂信息的例子：当验证错误时，WEB应用给出的错误信息是“密码不正确”而不是“用户或密码不正确”。如果攻击者试图通过暴力方法强行破解某个WEB应用的登陆密页面，“密码不正确”的错误消息就会告诉攻击者输入的用户名存在，只是密码不正确。这使得未知参数有两个（用户名和密码）减少为一个（密码），极大地增加了攻击者进入系统的可能。在识别SQL注入攻击时，应用的错误信息同样特别有用。</p>
 <blockquote>
-<ol>
-<li>响应中包含的用户输入</li>
-</ol>
+<p>响应中包含的用户输入</p>
 </blockquote>
 <p>如果动态生成的WEB页面包含用户输入的数据，就有可能产生XSS漏洞。WEB应用的设计者应当过滤用户的输入，以确保不会发生这类攻击。但是，WEB应用没有进行核实的过滤是个常见的问题。因此，如果在HTML响应信息中找到了WEB Fuzzer提供的数据，那就表面应当测试应用中的XSS漏洞。</p>
 <blockquote>
-<ol>
-<li>性能下降</li>
-</ol>
+<p>性能下降</p>
 </blockquote>
 <p>尽管通过其表现形式（直接的应用崩溃），我们很容易识别DoS攻击，但DoS漏洞则微妙得多。性能下降通常表明应用可能易于收到Dos攻击。请求超时是一种发现性能下降的方法，但是在Fuzz的过程中，还应当使用血能监视器检查问题，如过高的CPU使用率或内存使用率。</p>
 <blockquote>
-<ol>
-<li>请求超时</li>
-</ol>
+<p>请求超时</p>
 </blockquote>
 <p>参考上一条，不能忽视请求超时，因为它们可能表示存在临时或者永久的Dos条件。</p>
 <blockquote>
-<ol>
-<li>WEB Fuzzer错误信息</li>
-</ol>
+<p>WEB Fuzzer错误信息</p>
 </blockquote>
 <p>WEB Fuzzer有它子的错误处理方式，当某些特定函数执行失败时，它会弹出错误信息。例如，如果目标服务器因为前一个Fuzz请求而线下，WEB Fuzzer可能会给出一个错误信息，表明无法链接到目标服务器。这意味着可能发生了DoS攻击。</p>
 <blockquote>
-<ol>
-<li>处理或未被处理的异常</li>
-</ol>
+<p>处理或未被处理的异常</p>
 </blockquote>
 <p>当对WEB应用进行Fuzz时，可能会在应用本身以及它运行的服务器上都发现漏洞。因此，监视服务器多的状态也很重要。尽管WEB服务器返回的响应信息为我们提供了发现潜在漏洞的信息，但它们并没有揭示全部问题。如果输入稍加变化，Fuzz请求极可能会导致处理或未被处理的异常，从而导致可被利用的条件。因此，在Fuzz过程中，建议在目标WEB服务器上连接一个单独的调试器，这样就能够识别这些异常，比如FileFuzz和COMRaider，都带有内置的调试功能。WEB Fuzzer并不需要调试功能呢，因为WEB Fuzzer不需要反复地启动和中止一个应用。我们的方法是向某个Web应用发送一系列的fuzz请求，服务器会持续运行并相应这些请求，并阻止导致Dos的输入。</p>
 </span>
