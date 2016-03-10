@@ -35,34 +35,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="什么是宽字节？
+<meta name="description" content="WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
-
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
+WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。
+在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XSS中的宽字节编码问题">
-<meta property="og:url" content="http://www.rootat.net/2015/10/09/WideByteXSS/index.html">
+<meta property="og:title" content="WEB Fuzz中需要关注的7种响应">
+<meta property="og:url" content="http://www.rootat.net/2016/03/10/WEBFuzzresponse/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="什么是宽字节？
+<meta property="og:description" content="WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
-
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
-<meta property="og:updated_time" content="2016-03-09T03:12:13.807Z">
+WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。
+在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现">
+<meta property="og:updated_time" content="2016-03-10T02:59:16.730Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XSS中的宽字节编码问题">
-<meta name="twitter:description" content="什么是宽字节？
+<meta name="twitter:title" content="WEB Fuzz中需要关注的7种响应">
+<meta name="twitter:description" content="WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。
 
-GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“双字节”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。
-
-首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。
-比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？
-&amp;lt;?php h">
+WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。
+在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -72,7 +63,7 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
   };
 </script>
 
-  <title> XSS中的宽字节编码问题 | root@Zeroh </title>
+  <title> WEB Fuzz中需要关注的7种响应 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -163,7 +154,7 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
           
           
             
-              XSS中的宽字节编码问题
+              WEB Fuzz中需要关注的7种响应
             
           
         </h1>
@@ -172,8 +163,8 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-09T11:07:26+08:00" content="2015-10-09">
-            2015-10-09
+          <time itemprop="dateCreated" datetime="2016-03-10T10:53:58+08:00" content="2016-03-10">
+            2016-03-10
           </time>
         </span>
 
@@ -183,8 +174,8 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/10/09/WideByteXSS/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/09/WideByteXSS/" itemprop="commentsCount"></span>
+            <a href="/2016/03/10/WEBFuzzresponse/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/10/WEBFuzzresponse/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -198,33 +189,63 @@ GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确
       
 
       
-        <span itemprop="articleBody"><p><strong>什么是宽字节？</strong></p>
-<blockquote>
-<p>GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，确切地说应该称为“<strong>双字节</strong>”。宽字节带来的安全问题主要是吃ASCII字符（一字节）的现象。</p>
+        <span itemprop="articleBody"><blockquote>
+<p>WEB应用模糊测试（WEB Fuzz）是一种特殊形式的网络协议模糊测试，专门关注遵循HTTP规范的网络数据包。</p>
 </blockquote>
-<p>首先，字符集编码处理不一致除了引起XSS绕过问题，还常常导致SQL注入，命令执行等一系列安全问题。</p>
-<p>比如，下面这个PHP示例，在magic_gpc=on的情况下，如何触发XSS？</p>
-<pre><code><span class="xml"><span class="php"><span class="preprocessor">&lt;?php</span> header(“Content-Type: text/html;charset=GBK”);<span class="preprocessor">?&gt;</span></span>
-<span class="tag">&lt;<span class="title">head</span>
-&lt;<span class="attribute">title</span>&gt;</span>xss<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="handlebars"><span class="xml">
-a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$_GET</span>[‘x’];<span class="preprocessor">?&gt;</span></span>”;
-</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span>
-</code></pre><p>我们会想到，需要闭合双引号才行，如果只是提交如下语句：</p>
-<pre><code>gb.php?x=<span class="number">1</span>”;alert(<span class="number">1</span>)<span class="comment">//</span>
-</code></pre><p>双引号会被转义成\”,导致闭合失败:</p>
-<pre><code>a=”<span class="number">1</span>\”;alert(<span class="number">1</span>)<span class="comment">//”;</span>
-</code></pre><p>由于这个网页头部响应指明了这是GBK编码，GBK编码第一字节（高字节）的范围是0x81~0xFE,第二字节（低字节）的范围是0x40~0x7E与0x80~0xFE，这样的十六进制表示。而\符号的十六进制表示为0x5C，正好在GBK的低字节中，如果之前有一个高字节，那么正好会被组成一个合法字符，于是提交如下：</p>
-<pre><code>gb.php?x=<span class="number">1</span>%<span class="number">81</span>”alert(<span class="number">1</span>)<span class="comment">//</span>
-</code></pre><p>双引号会继续被转义成\”，最终如下：</p>
-<pre><code>a=”<span class="number">1</span>[<span class="number">0x81</span>]\”;alert(<span class="number">1</span>)<span class="comment">//”;</span>
-</code></pre><p>[0x81]\组成了一个合法字符，于是之后的双引号就产生闭合，这样我们就成功触发了XSS。</p>
+<p>WEB Fuzz并不是新的概念，目前有多种WEB应用模糊测试器（WEB Fuzzer），比如SPIKE Proxy、SPI Fuzzer、besTORM，以及渗透人员喜爱的Burp Suite。</p>
+<p>在Fuzz请求完成后，目标应用发回来的响应提供了Fuzz请求所造成影响的各种线索。如果发现了异常，就可以确定于异常相关的请求。下面总结了一些响应信息，这些响应信息可能指示漏洞条件的存在：</p>
+<ul>
+<li>HTML状态码 </li>
+<li>响应中的错误信息 </li>
+<li>响应中包含的用户输入 </li>
+<li>性能下降 </li>
+<li>请求超时 </li>
+<li>WEB Fuzzer错误信息 </li>
+<li>处理或者未处理的异常</li>
+</ul>
+<p>下面分别详细展开讨论：</p>
 <blockquote>
-<p>这些宽字节编码的高低位范围都不太相同，具体可以查看相关维基百科。</p>
+<ol>
+<li>HTML状态码</li>
+</ol>
 </blockquote>
-<p>这里有一点要注意，GB2312是被GBK兼容的，它的高位范围是0xA1~0xF7,低位范围是0xA1~0xFE(0x5c不在该范围内)，把上面的PHP代码的GBK改为GB2312，在浏览器中处理行为同GBK，也许是由于GBK兼容GB2312，浏览器都做了同样的兼容：把GB2312统一按GBK处理。</p>
-<p>参考《WEB前端黑客技术揭秘》</p>
+<p>HTML状态码是一种重要信息，它提供了快速判断对应的请求是成功还是失败的指示。因此，WEB Fuzzer解析原始响应，得到状态码，然后在一个显示响应详细信息的列表中将其单独展示出来。通过THML状态码信息，用户能够快速确定需要进一步详细检查的响应部分。</p>
+<blockquote>
+<ol>
+<li>响应中的错误信息</li>
+</ol>
+</blockquote>
+<p>从设计上来说，WEB服务器一般都会在动态生成的网页中包含错误信息。如果一个WEB服务器在生产环节中启动不当，启用了调试功能，就会发生这种情况。以下是一个典型的透露了太懂信息的例子：当验证错误时，WEB应用给出的错误信息是“密码不正确”而不是“用户或密码不正确”。如果攻击者试图通过暴力方法强行破解某个WEB应用的登陆密页面，“密码不正确”的错误消息就会告诉攻击者输入的用户名存在，只是密码不正确。这使得未知参数有两个（用户名和密码）减少为一个（密码），极大地增加了攻击者进入系统的可能。在识别SQL注入攻击时，应用的错误信息同样特别有用。</p>
+<blockquote>
+<ol>
+<li>响应中包含的用户输入</li>
+</ol>
+</blockquote>
+<p>如果动态生成的WEB页面包含用户输入的数据，就有可能产生XSS漏洞。WEB应用的设计者应当过滤用户的输入，以确保不会发生这类攻击。但是，WEB应用没有进行核实的过滤是个常见的问题。因此，如果在HTML响应信息中找到了WEB Fuzzer提供的数据，那就表面应当测试应用中的XSS漏洞。</p>
+<blockquote>
+<ol>
+<li>性能下降</li>
+</ol>
+</blockquote>
+<p>尽管通过其表现形式（直接的应用崩溃），我们很容易识别DoS攻击，但DoS漏洞则微妙得多。性能下降通常表明应用可能易于收到Dos攻击。请求超时是一种发现性能下降的方法，但是在Fuzz的过程中，还应当使用血能监视器检查问题，如过高的CPU使用率或内存使用率。</p>
+<blockquote>
+<ol>
+<li>请求超时</li>
+</ol>
+</blockquote>
+<p>参考上一条，不能忽视请求超时，因为它们可能表示存在临时或者永久的Dos条件。</p>
+<blockquote>
+<ol>
+<li>WEB Fuzzer错误信息</li>
+</ol>
+</blockquote>
+<p>WEB Fuzzer有它子的错误处理方式，当某些特定函数执行失败时，它会弹出错误信息。例如，如果目标服务器因为前一个Fuzz请求而线下，WEB Fuzzer可能会给出一个错误信息，表明无法链接到目标服务器。这意味着可能发生了DoS攻击。</p>
+<blockquote>
+<ol>
+<li>处理或未被处理的异常</li>
+</ol>
+</blockquote>
+<p>当对WEB应用进行Fuzz时，可能会在应用本身以及它运行的服务器上都发现漏洞。因此，监视服务器多的状态也很重要。尽管WEB服务器返回的响应信息为我们提供了发现潜在漏洞的信息，但它们并没有揭示全部问题。如果输入稍加变化，Fuzz请求极可能会导致处理或未被处理的异常，从而导致可被利用的条件。因此，在Fuzz过程中，建议在目标WEB服务器上连接一个单独的调试器，这样就能够识别这些异常，比如FileFuzz和COMRaider，都带有内置的调试功能。WEB Fuzzer并不需要调试功能呢，因为WEB Fuzzer不需要反复地启动和中止一个应用。我们的方法是向某个Web应用发送一系列的fuzz请求，服务器会持续运行并相应这些请求，并阻止导致Dos的输入。</p>
 </span>
       
     </div>
@@ -236,13 +257,11 @@ a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="k
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/02/FindNetworkIP/" rel="prev">判断内网机器的真实外网IP或域名</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/06/SSHReverseTunnel/" rel="next">使用SSH反向隧道访问内网设备</a>
+              <a href="/2015/11/02/FindNetworkIP/" rel="next">判断内网机器的真实外网IP或域名</a>
             
           </div>
         </div>
@@ -404,9 +423,9 @@ a=”<span class="php"><span class="preprocessor">&lt;?php</span> <span class="k
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/10/09/WideByteXSS/';
-      var disqus_title = 'XSS中的宽字节编码问题';
-      var disqus_url = 'http://www.rootat.net/2015/10/09/WideByteXSS/';
+      var disqus_identifier = '2016/03/10/WEBFuzzresponse/';
+      var disqus_title = 'WEB Fuzz中需要关注的7种响应';
+      var disqus_url = 'http://www.rootat.net/2016/03/10/WEBFuzzresponse/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
