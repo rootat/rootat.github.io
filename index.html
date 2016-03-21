@@ -146,6 +146,101 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/21/AlexaTop1000000/" itemprop="url">
+                Alexa TOP 100万的域名列表
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-21T16:18:51+08:00" content="2016-03-21">
+            2016-03-21
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/03/21/AlexaTop1000000/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/21/AlexaTop1000000/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>数据爬取来源：<a href="http://stuffgate.com/stuff/website/" target="_blank" rel="external">http://stuffgate.com/stuff/website/</a><br>用python写了段小爬虫进行爬取，代码比较简单：</p>
+<pre><code><span class="keyword">import</span> re
+<span class="keyword">import</span> requests
+
+header = {<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36'</span>}
+
+<span class="keyword">with</span> open(<span class="string">'domains.txt'</span>,<span class="string">'wb'</span>) <span class="keyword">as</span> f:
+
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>,<span class="number">1001000</span>,<span class="number">1000</span>):
+        <span class="keyword">try</span>:
+
+            conn = requests.get(<span class="string">'http://stuffgate.com/stuff/website/top-'</span>+str(i)+<span class="string">'-sites'</span>,headers=header,timeout=<span class="number">30</span>)
+            body = conn.text
+            domains = re.findall(<span class="string">u"&lt;td&gt;&lt;a href='http://(.+)' target='_blank'&gt;.+&lt;/a&gt;&lt;/td&gt;"</span>,body)
+
+            <span class="keyword">for</span> domain <span class="keyword">in</span> domains:
+
+                <span class="keyword">print</span> domain
+                f.write(domain+<span class="string">'\n'</span>)
+            <span class="keyword">print</span> <span class="string">"The top:"</span>+str(i)+<span class="string">" is Finised"</span>
+
+        <span class="keyword">except</span> Exception,e:  
+            <span class="keyword">print</span> Exception,<span class="string">":"</span>,e
+
+<span class="keyword">print</span> <span class="string">"Completing the task,Good luck!"</span>    
+</code></pre><p>几分钟之后爬取完成，得到了完整的数据：<br><a href="https://github.com/zer0h/top-1000000-domains" target="_blank" rel="external">top-1000000-domains</a></p>
+<p><strong>有什么用呢？</strong><br>我觉得可以用于一些字典采集工作，比如需要一个目录扫描的字典，可以爬取所有网站列表robots.txt文件，或对网站目录进行浅爬行，将爬行结果进行词频分析统计；<br>也可以对排名靠后的一些网站进行<strong>网站指纹、IP、WEB服务器版本</strong>等信息进行识别，将识别结果入库，对于研究一些特定数据会有帮助。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/10/WEBFuzzresponse/" itemprop="url">
                 WEB Fuzz中需要关注的7种响应
               </a>
@@ -870,7 +965,7 @@ fclose(<span class="variable">$fp</span>);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
