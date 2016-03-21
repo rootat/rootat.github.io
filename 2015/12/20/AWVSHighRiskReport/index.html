@@ -35,28 +35,34 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-nslookup myip.opendns.com resolver1.opendns.com
-通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
-ipconfig /displaydns 
-查看dn">
+<meta name="description" content="有时需要用到AWVS扫描器，手动从大量扫描结果中找出高危的报告是个麻烦的事情。
+查了一下AWVS的文档说明，其中提到扫描结果以access数据库的形式保存，从数据库中不同值可以直观地判断扫描结果。但我最终选择以分析html中High的数值的方式进行判断是否高危：
+import os
+import re
+import shutil
+path = os.getcwd()
+os.mkdir(&quot;C:\Us">
 <meta property="og:type" content="article">
-<meta property="og:title" content="判断内网机器的真实外网IP或域名">
-<meta property="og:url" content="http://www.rootat.net/2015/11/02/FindNetworkIP/index.html">
+<meta property="og:title" content="AWVSHighRiskReport">
+<meta property="og:url" content="http://www.rootat.net/2015/12/20/AWVSHighRiskReport/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-nslookup myip.opendns.com resolver1.opendns.com
-通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
-ipconfig /displaydns 
-查看dn">
-<meta property="og:updated_time" content="2016-03-09T09:04:09.753Z">
+<meta property="og:description" content="有时需要用到AWVS扫描器，手动从大量扫描结果中找出高危的报告是个麻烦的事情。
+查了一下AWVS的文档说明，其中提到扫描结果以access数据库的形式保存，从数据库中不同值可以直观地判断扫描结果。但我最终选择以分析html中High的数值的方式进行判断是否高危：
+import os
+import re
+import shutil
+path = os.getcwd()
+os.mkdir(&quot;C:\Us">
+<meta property="og:updated_time" content="2016-03-21T09:10:47.709Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断内网机器的真实外网IP或域名">
-<meta name="twitter:description" content="在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-nslookup myip.opendns.com resolver1.opendns.com
-通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量
-ipconfig /displaydns 
-查看dn">
+<meta name="twitter:title" content="AWVSHighRiskReport">
+<meta name="twitter:description" content="有时需要用到AWVS扫描器，手动从大量扫描结果中找出高危的报告是个麻烦的事情。
+查了一下AWVS的文档说明，其中提到扫描结果以access数据库的形式保存，从数据库中不同值可以直观地判断扫描结果。但我最终选择以分析html中High的数值的方式进行判断是否高危：
+import os
+import re
+import shutil
+path = os.getcwd()
+os.mkdir(&quot;C:\Us">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +72,7 @@ ipconfig /displaydns
   };
 </script>
 
-  <title> 判断内网机器的真实外网IP或域名 | root@Zeroh </title>
+  <title> AWVSHighRiskReport | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,7 +163,7 @@ ipconfig /displaydns
           
           
             
-              判断内网机器的真实外网IP或域名
+              AWVSHighRiskReport
             
           
         </h1>
@@ -166,8 +172,8 @@ ipconfig /displaydns
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-02T09:55:19+08:00" content="2015-11-02">
-            2015-11-02
+          <time itemprop="dateCreated" datetime="2015-12-20T16:07:39+08:00" content="2015-12-20">
+            2015-12-20
           </time>
         </span>
 
@@ -177,8 +183,8 @@ ipconfig /displaydns
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/11/02/FindNetworkIP/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/02/FindNetworkIP/" itemprop="commentsCount"></span>
+            <a href="/2015/12/20/AWVSHighRiskReport/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/20/AWVSHighRiskReport/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -192,19 +198,25 @@ ipconfig /displaydns
       
 
       
-        <span itemprop="articleBody"><p>在内渗透中有时需要在某台WEB服务器中留下后门，可以通过内网IP建立IPC连接，但还需要获知外网IP才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：</p>
-<pre><code>nslookup myip<span class="class">.opendns</span><span class="class">.com</span> resolver1<span class="class">.opendns</span><span class="class">.com</span>
-</code></pre><p>通过nslookup访问上述地址 会回显IP 但我多数情况碰到的都是统一的出口流量</p>
-<pre><code><span class="winutils">ipconfig</span> /displaydns 
-</code></pre><p>查看dns缓存 如果访问比较活跃  相关记录可能会出现在缓存里</p>
-<p>如果是IIS7 IIS7.5：<br>执行如下命令：</p>
-<pre><code><span class="tag">%<span class="title">windir</span></span>%\system32\inetsrv\appcmd list site
-</code></pre><p>显示网站列表</p>
-<pre><code><span class="tag">%<span class="title">windir</span></span>%\system32\inetsrv\appcmd list site /config /xml
-</code></pre><p>导出指定网站的配置信息</p>
-<p>从中找到绑定的域名及IP,但大型网络中一般结果都为localhost<br>上述的config文件还记录了一条关键信息，就是Web绝对路径，通过绝对路径，翻看网站源代码，找到title、目录结构、链接及相关的说明信息，再通过google搜索，加上相关域名或关键词缩写范围，尝试从google收录中找到该网站。</p>
-<p>如果为IIS6 无法快速确定Web目录，还可以翻看IIS日志：<br>c$\inetpub\logs\LogFiles\W3SVC1，日志可能会暴露外网IP、域名；通过访问者IP能判断是否能够外网访问；通过post或get请求的路径，加上相关域名或关键词配合google搜索。</p>
-<p>注意：在分析日志时使用正则表达式搜索可以提高效率。</p>
+        <span itemprop="articleBody"><p>有时需要用到AWVS扫描器，手动从大量扫描结果中找出高危的报告是个麻烦的事情。</p>
+<p>查了一下AWVS的文档说明，其中提到扫描结果以access数据库的形式保存，从数据库中不同值可以直观地判断扫描结果。但我最终选择以分析html中High的数值的方式进行判断是否高危：</p>
+<pre><code>import os
+import re
+import shutil
+path = os.<span class="function"><span class="title">getcwd</span><span class="params">()</span></span>
+os.<span class="function"><span class="title">mkdir</span><span class="params">(<span class="string">"C:\Users\Administrator\Desktop\high"</span>)</span></span>
+
+def <span class="function"><span class="title">scan</span><span class="params">()</span></span>:
+    <span class="keyword">for</span> root , dirs, files <span class="keyword">in</span> os.<span class="function"><span class="title">walk</span><span class="params">(path)</span></span>:
+        <span class="keyword">for</span> name <span class="keyword">in</span> files:
+            <span class="keyword">if</span> name.<span class="function"><span class="title">endswith</span><span class="params">(<span class="string">".html"</span>)</span></span>:
+                report=<span class="function"><span class="title">open</span><span class="params">(os.path.join(root, name)</span></span>).<span class="function"><span class="title">read</span><span class="params">()</span></span>
+        high=re.<span class="function"><span class="title">search</span><span class="params">(<span class="string">''</span><span class="string">'class="s15"&gt;High&lt;/td&gt;&lt;td colspan="3" rowspan="4" class="s23"&gt;(\d+)&lt;/td&gt;'</span><span class="string">''</span>,report)</span></span>.<span class="function"><span class="title">group</span><span class="params">(<span class="number">1</span>)</span></span>
+        <span class="keyword">if</span> <span class="function"><span class="title">int</span><span class="params">(high)</span></span>&gt;<span class="number">0</span>:
+            shutil.<span class="function"><span class="title">move</span><span class="params">(root,<span class="string">"C:\Users\Administrator\Desktop\high"</span>)</span></span>
+<span class="function"><span class="title">scan</span><span class="params">()</span></span>
+print <span class="string">"Good Luck!"</span>
+</code></pre><p>代码比较简单，主要是通过正则匹配到High对应的数值，大于0则高危。</p>
 </span>
       
     </div>
@@ -216,13 +228,13 @@ ipconfig /displaydns
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/20/AWVSHighRiskReport/" rel="prev">AWVSHighRiskReport</a>
+              <a href="/2016/03/10/WEBFuzzresponse/" rel="prev">WEB Fuzz中需要关注的7种响应</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/09/WideByteXSS/" rel="next">XSS中的宽字节编码问题</a>
+              <a href="/2015/11/02/FindNetworkIP/" rel="next">判断内网机器的真实外网IP或域名</a>
             
           </div>
         </div>
@@ -384,9 +396,9 @@ ipconfig /displaydns
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/11/02/FindNetworkIP/';
-      var disqus_title = '判断内网机器的真实外网IP或域名';
-      var disqus_url = 'http://www.rootat.net/2015/11/02/FindNetworkIP/';
+      var disqus_identifier = '2015/12/20/AWVSHighRiskReport/';
+      var disqus_title = 'AWVSHighRiskReport';
+      var disqus_url = 'http://www.rootat.net/2015/12/20/AWVSHighRiskReport/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

@@ -356,6 +356,93 @@ header = {<span class="string">'User-Agent'</span> : <span class="string">'Mozil
           
           
             
+              <a class="post-title-link" href="/2015/12/20/AWVSHighRiskReport/" itemprop="url">
+                AWVSHighRiskReport
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-20T16:07:39+08:00" content="2015-12-20">
+            2015-12-20
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/20/AWVSHighRiskReport/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/20/AWVSHighRiskReport/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>有时需要用到AWVS扫描器，手动从大量扫描结果中找出高危的报告是个麻烦的事情。</p>
+<p>查了一下AWVS的文档说明，其中提到扫描结果以access数据库的形式保存，从数据库中不同值可以直观地判断扫描结果。但我最终选择以分析html中High的数值的方式进行判断是否高危：</p>
+<pre><code>import os
+import re
+import shutil
+path = os.<span class="function"><span class="title">getcwd</span><span class="params">()</span></span>
+os.<span class="function"><span class="title">mkdir</span><span class="params">(<span class="string">"C:\Users\Administrator\Desktop\high"</span>)</span></span>
+
+def <span class="function"><span class="title">scan</span><span class="params">()</span></span>:
+    <span class="keyword">for</span> root , dirs, files <span class="keyword">in</span> os.<span class="function"><span class="title">walk</span><span class="params">(path)</span></span>:
+        <span class="keyword">for</span> name <span class="keyword">in</span> files:
+            <span class="keyword">if</span> name.<span class="function"><span class="title">endswith</span><span class="params">(<span class="string">".html"</span>)</span></span>:
+                report=<span class="function"><span class="title">open</span><span class="params">(os.path.join(root, name)</span></span>).<span class="function"><span class="title">read</span><span class="params">()</span></span>
+        high=re.<span class="function"><span class="title">search</span><span class="params">(<span class="string">''</span><span class="string">'class="s15"&gt;High&lt;/td&gt;&lt;td colspan="3" rowspan="4" class="s23"&gt;(\d+)&lt;/td&gt;'</span><span class="string">''</span>,report)</span></span>.<span class="function"><span class="title">group</span><span class="params">(<span class="number">1</span>)</span></span>
+        <span class="keyword">if</span> <span class="function"><span class="title">int</span><span class="params">(high)</span></span>&gt;<span class="number">0</span>:
+            shutil.<span class="function"><span class="title">move</span><span class="params">(root,<span class="string">"C:\Users\Administrator\Desktop\high"</span>)</span></span>
+<span class="function"><span class="title">scan</span><span class="params">()</span></span>
+print <span class="string">"Good Luck!"</span>
+</code></pre><p>代码比较简单，主要是通过正则匹配到High对应的数值，大于0则高危。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/02/FindNetworkIP/" itemprop="url">
                 判断内网机器的真实外网IP或域名
               </a>
@@ -968,7 +1055,7 @@ fclose(<span class="variable">$fp</span>);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
