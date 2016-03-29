@@ -146,6 +146,159 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/29/httpscan/" itemprop="url">
+                httpscan 爬虫式的网段Web主机发现小工具
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-29T17:25:42+08:00" content="2016-03-29">
+            2016-03-29
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/03/29/httpscan/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/29/httpscan/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>httpscan是一个扫描指定网段的Web主机的小工具。和端口扫描器不一样，httpscan是以爬虫的方式进行Web主机发现，因此相对来说不容易被防火墙拦截。<br>httpscan会返回IP http状态码 Web容器版本 以及网站标题。</p>
+<p><img src="https://raw.githubusercontent.com/zer0h/httpscan/master/log/demo.png" alt="demo"></p>
+<p>Usage：<code>./httpscan IP/CIDR –t threads</code><br>Example:<code>./httpscan.py 10.20.30.0/24 –t 10</code></p>
+<p>地址：<a href="https://github.com/zer0h/httpscan" target="_blank" rel="external">https://github.com/zer0h/httpscan</a></p>
+<p>主要代码：</p>
+<pre><code><span class="comment">#!/usr/bin/env python</span>
+<span class="comment">#coding:utf-8</span>
+<span class="comment"># Author: Zeroh</span>
+
+<span class="keyword">import</span> re
+<span class="keyword">import</span> sys
+<span class="keyword">import</span> Queue
+<span class="keyword">import</span> threading
+<span class="keyword">import</span> optparse
+<span class="keyword">import</span> requests
+<span class="keyword">from</span> IPy <span class="keyword">import</span> IP
+
+printLock = threading.Semaphore(<span class="number">1</span>)  <span class="comment">#lock Screen print</span>
+TimeOut = <span class="number">5</span>  <span class="comment">#request timeout</span>
+
+<span class="comment">#User-Agent</span>
+header = {<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36'</span>,<span class="string">'Connection'</span>:<span class="string">'close'</span>}
+
+<span class="class"><span class="keyword">class</span> <span class="title">scan</span><span class="params">()</span>:</span>
+
+  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,cidr,threads_num)</span>:</span>
+    self.threads_num = threads_num
+    self.cidr = IP(cidr)
+    <span class="comment">#build ip queue</span>
+    self.IPs = Queue.Queue()
+    <span class="keyword">for</span> ip <span class="keyword">in</span> self.cidr:
+      ip = str(ip)
+      self.IPs.put(ip)
+
+  <span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(self)</span>:</span>
+    <span class="keyword">with</span> threading.Lock():
+      <span class="keyword">while</span> self.IPs.qsize() &gt; <span class="number">0</span>:
+        ip = self.IPs.get()
+        <span class="keyword">try</span>:
+          r = requests.Session().get(<span class="string">'http://'</span>+str(ip),headers=header,timeout=TimeOut)
+          status = r.status_code
+          title = re.search(<span class="string">r'&lt;title&gt;(.*)&lt;/title&gt;'</span>, r.text) <span class="comment">#get the title</span>
+          <span class="keyword">if</span> title:
+            title = title.group(<span class="number">1</span>).strip().strip(<span class="string">"\r"</span>).strip(<span class="string">"\n"</span>)[:<span class="number">30</span>]
+          <span class="keyword">else</span>:
+            title = <span class="string">"None"</span>
+          banner = <span class="string">''</span>
+          <span class="keyword">try</span>:
+            banner += r.headers[<span class="string">'Server'</span>][:<span class="number">20</span>] <span class="comment">#get the server banner</span>
+          <span class="keyword">except</span>:<span class="keyword">pass</span>
+          printLock.acquire()
+          <span class="keyword">print</span> <span class="string">"|%-16s|%-6s|%-20s|%-30s|"</span> % (ip,status,banner,title)
+          <span class="keyword">print</span> <span class="string">"+----------------+------+--------------------+------------------------------+"</span>
+
+          <span class="comment">#Save log</span>
+          <span class="keyword">with</span> open(<span class="string">"./log/"</span>+self.cidr.strNormal(<span class="number">3</span>)+<span class="string">".log"</span>,<span class="string">'a'</span>) <span class="keyword">as</span> f:
+            f.write(ip+<span class="string">"\n"</span>)
+
+        <span class="keyword">except</span> Exception,e:
+          printLock.acquire()
+        <span class="keyword">finally</span>:
+          printLock.release()
+
+  <span class="comment">#Multi thread</span>
+  <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(self.threads_num):
+      t = threading.Thread(target=self.request)
+      t.start()
+
+<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
+  parser = optparse.OptionParser(<span class="string">"Usage: %prog [options] target"</span>)
+  parser.add_option(<span class="string">"-t"</span>, <span class="string">"--thread"</span>, dest = <span class="string">"threads_num"</span>,
+    default = <span class="number">1</span>, type = <span class="string">"int"</span>,
+    help = <span class="string">"[optional]number of  theads,default=10"</span>)
+  (options, args) = parser.parse_args()
+  <span class="keyword">if</span> len(args) &lt; <span class="number">1</span>:
+    parser.print_help()
+    sys.exit(<span class="number">0</span>)
+
+  <span class="keyword">print</span> <span class="string">"+----------------+------+--------------------+------------------------------+"</span>
+  <span class="keyword">print</span> <span class="string">"|     IP         |Status|       Server       |            Title             |"</span>
+  <span class="keyword">print</span> <span class="string">"+----------------+------+--------------------+------------------------------+"</span>
+
+  s = scan(cidr=args[<span class="number">0</span>],threads_num=options.threads_num)
+  s.run()
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/21/AlexaTop1000000/" itemprop="url">
                 Alexa TOP 100万的域名列表
               </a>
@@ -1025,81 +1178,13 @@ fclose(<span class="variable">$fp</span>);
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/17/Travel/" itemprop="url">
-                旅行
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-05-17T22:29:38+08:00" content="2015-05-17">
-            2015-05-17
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/17/Travel/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/17/Travel/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>是遥远的地方<br>对我们都有一种诱惑<br>不是诱惑于美丽<br>就是诱惑于传说</p>
-<p>即使远方的风景<br>并不尽如人意<br>我们也无需在乎<br>因为这实在是一个<br>迷人的错</p>
-<p>到远方去<br>到远方去<br>熟悉的地方没有景色</p>
-<p>——汪国真</p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+  </nav>
+
  </div>
 
         
@@ -1131,7 +1216,7 @@ fclose(<span class="variable">$fp</span>);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
