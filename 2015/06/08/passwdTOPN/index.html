@@ -49,7 +49,7 @@ time cat">
 cat password.txt | sort | uniq -c | sort -k1,1nr | head -10
 提取password词频TOP10的密码
 time cat">
-<meta property="og:updated_time" content="2016-03-09T08:30:33.385Z">
+<meta property="og:updated_time" content="2016-03-29T09:31:53.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高效词频分析">
 <meta name="twitter:description" content="由于密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，由ruby编写的一款程序，可以分析出密码频率TOP N。但实际使用中发现效率较低。
@@ -197,7 +197,7 @@ time cat">
 <pre><code>cat password.txt |<span class="string"> sort </span>|<span class="string"> uniq -c </span>|<span class="string"> sort -k1,1nr </span>|<span class="string"> head -10</span>
 </code></pre><p>提取password词频TOP10的密码</p>
 <p><code>time cat pass.txt | sort | uniq -c | sort -k1,1nr | head -10 &gt;</code> result.txt<br>保存提取结果并记录所消耗时间</p>
-<p>由于sort是C语言编写，效率远高于Pipal。在数据量较大的词频统计时，差距尤其明显。</p>
+<p>由于sort是C语言编写，效率远高于Pipal。在数据量较大的词频统计时，差距尤其明显。<br>实际测试 在虚拟机中两亿条数据获取top 10000 大概50分钟左右。</p>
 </span>
       
     </div>
