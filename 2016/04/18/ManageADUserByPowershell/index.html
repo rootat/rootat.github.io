@@ -45,7 +45,7 @@ $objOU=[ADSI]”LDAP://OU=People,DC=con">
 <meta property="og:description" content="在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。
 下面以创建用户举例：创建域用户最基本的Windows Powershell脚本类似这样：
 $objOU=[ADSI]”LDAP://OU=People,DC=con">
-<meta property="og:updated_time" content="2016-04-18T09:18:50.435Z">
+<meta property="og:updated_time" content="2016-04-18T09:20:04.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用powershell管理域用户">
 <meta name="twitter:description" content="在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。
@@ -203,7 +203,7 @@ $objOU=[ADSI]”LDAP://OU=People,DC=con">
 </code></pre><p>生成的对象结果会分配给变量$objUser，并用该变量代表要创建的对象，可供后续操作。</p>
 <p><strong>填写用户属性</strong></p>
 <p>这里需要注意一个问题，在将改动合并之前，新对象和其进行的改动都不会保存，而在填写所有必要的属性之前，还不能成功合并改动。用户对象的必须舒心包括windows 2000前登陆名。该属性的LDAP名称是sAMAccountName，因此代码的下一行需要为对象指派sAMAccountName，此时需要使用Put方法。Put是为对象写入属性的标准方法，Get则是检索对象属性的标准方法，此处的代码应该像下面这样：</p>
-<pre><code><span class="variable">$odjUser</span>.Put=(“sAMAccountName”,”mary.north”)
+<pre><code><span class="variable">$odjUser</span>.Put=(“sAMAccountName”,”Mary North”)
 </code></pre><p>对于用户对象，还有其他强制属性，包括对象的安全标识符(SID)，但这些对象会在将新用户提交到目录的时候用Active Directory自动创建。</p>
 <p>使用SetInfo方法合并改动<br>要合并改动，请使用Active Directory对象的SetInfo方法。此处的代码应该像下面这样：</p>
 <pre><code><span class="variable">$objUser</span>.SetInfo()
