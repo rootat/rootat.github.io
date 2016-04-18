@@ -203,7 +203,7 @@
 <p>这里需要注意一个问题，在将改动合并之前，新对象和其进行的改动都不会保存，而在填写所有必要的属性之前，还不能成功合并改动。用户对象的必须舒心包括windows 2000前登陆名。该属性的LDAP名称是sAMAccountName，因此代码的下一行需要为对象指派sAMAccountName，此时需要使用Put方法。Put是为对象写入属性的标准方法，Get则是检索对象属性的标准方法，此处的代码应该像下面这样：</p>
 <pre><code><span class="variable">$odjUser</span>.Put=(“sAMAccountName”,”Mary North”)
 </code></pre><p>对于用户对象，还有其他强制属性，包括对象的安全标识符(SID)，但这些对象会在将新用户提交到目录的时候用Active Directory自动创建。</p>
-<p>使用SetInfo方法合并改动<br>要合并改动，请使用Active Directory对象的SetInfo方法。此处的代码应该像下面这样：</p>
+<p><strong>使用SetInfo方法合并改动</strong><br>要合并改动，请使用Active Directory对象的SetInfo方法。此处的代码应该像下面这样：</p>
 <pre><code><span class="variable">$objUser</span>.SetInfo()
 </code></pre><p>填写其他用户属性<br>上述命令将创建只包含强制sAMAccountName属性的用户，在创建用户对象时，还需要填写其他用户属性。前面介绍了使用用户对象的Put方法写入属性，因此这里只需要重复调用该方法，指定需要添加的每个属性即可：</p>
 <pre><code><span class="variable">$odjUser</span>.Put=(“sAMAccountName”, ”<span class="variable">$samAccountName</span>”)
