@@ -191,22 +191,18 @@
 <span class="variable">$odjUser</span>.Put=(“sAMAccountName”,”mary.north”)
 <span class="variable">$objUser</span>.SetInfo()
 </code></pre><p>上述代码列举了在Active Directory中使用Windows Powershell创建用户的四个基本步骤。<br>下面将作详细介绍。</p>
-<blockquote>
-<p>连接到Active Directory容器</p>
-</blockquote>
+<p><strong>连接到Active Directory容器</strong></p>
 <p>要创建用户这样的对象，实际上是要对该对象的容器来创建对象。因此首先需要针对容器，执行某种操作，也就是“方法”。第一步需要连接到容器，Windows Powershell可以使用Active Directory服务接口类型适配器切入到Active Directory对象。要连接Active Directory对象，必须提交LDAP查询字符串，也就是LDAP://协议标识符，后跟对象的DN。因此第一行代码应该像下面这样：</p>
 <pre><code><span class="variable">$objOU</span>=[<span class="constant">ADSI</span>]”<span class="constant">LDAP</span><span class="symbol">://OU=People</span>,<span class="constant">DC</span>=contoso,<span class="constant">DC</span>=com”
 </code></pre><p>Windows Powershell需要使用ADSI类型适配器创建代表People OU的对象，并将其分配给分量。名为objOU的变量反映了对变量类型进行标识，以obj开头只是编程标准，但实际变量可以使用任何名称。</p>
-<blockquote>
-<p>调用Create方法</p>
-</blockquote>
+<p><strong>调用Create方法</strong></p>
 <p>至此，变量$objOU就可以代表People OU。接着即可使用容器的create方法让容器创建对象。Create方法需要提供两个参数：对象类和对象RDN。对象的RDN是指该对象在父容器下的名称位置，大部分对象类则使用“CN=对象名”这样的格式作为自己的RDN。然而OU的RDN是“OU=组织单位名称”这样的格式，而域的RDN是“DN=域名”。因此下列代码可以使用”CN=Mary North”这样的RDN创建用户对象:</p>
 <blockquote>
 <p>$objUser=$objU.Create(“user”,”CN=Mary North”)</p>
 </blockquote>
 <p>生成的对象结果会分配给变量$objUser，并用该变量代表要创建的对象，可供后续操作。</p>
-<pre><code>填写用户属性
-</code></pre><p>这里需要注意一个问题，在将改动合并之前，新对象和其进行的改动都不会保存，而在填写所有必要的属性之前，还不能成功合并改动。用户对象的必须舒心包括windows 2000前登陆名。该属性的LDAP名称是sAMAccountName，因此代码的下一行需要为对象指派sAMAccountName，此时需要使用Put方法。Put是为对象写入属性的标准方法，Get则是检索对象属性的标准方法，此处的代码应该像下面这样：</p>
+<p><strong>填写用户属性</strong></p>
+<p>这里需要注意一个问题，在将改动合并之前，新对象和其进行的改动都不会保存，而在填写所有必要的属性之前，还不能成功合并改动。用户对象的必须舒心包括windows 2000前登陆名。该属性的LDAP名称是sAMAccountName，因此代码的下一行需要为对象指派sAMAccountName，此时需要使用Put方法。Put是为对象写入属性的标准方法，Get则是检索对象属性的标准方法，此处的代码应该像下面这样：</p>
 <blockquote>
 <p>$odjUser.Put=(“sAMAccountName”,”mary.north”)</p>
 </blockquote>
