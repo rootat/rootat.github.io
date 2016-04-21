@@ -810,9 +810,9 @@ print <span class="string">"Good Luck!"</span>
       
         
           <span itemprop="articleBody"><p>在内网渗透中有时需要在某台WEB服务器中留下后门，该机器可以通过内网IP建立IPC连接，但还需要获知外网IP或域名才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：</p>
-<p>1、通过nslookup访问上述地址 会回显IP</p>
+<p>1、通过nslookup访问外部地址 回显IP</p>
 <pre><code>nslookup myip<span class="class">.opendns</span><span class="class">.com</span> resolver1<span class="class">.opendns</span><span class="class">.com</span>
-</code></pre><p> 但我多数情况碰到的都是统一的出口流量</p>
+</code></pre><p> 但多数内网都是统一的出口流量</p>
 <p>2、查看dns缓存 如果某站点频繁被访问  相关记录可能会出现在缓存里</p>
 <pre><code><span class="winutils">ipconfig</span> /displaydns 
 </code></pre><p>3、如果是IIS7 IIS7.5：<br>执行如下命令：</p>

@@ -36,27 +36,27 @@
 
 
 <meta name="description" content="在内网渗透中有时需要在某台WEB服务器中留下后门，该机器可以通过内网IP建立IPC连接，但还需要获知外网IP或域名才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-1、通过nslookup访问上述地址 会回显IP
+1、通过nslookup访问外部地址 回显IP
 nslookup myip.opendns.com resolver1.opendns.com
- 但我多数情况碰到的都是统一的出口流量
-2、查看dns缓存 如果某站点频">
+ 但多数内网都是统一的出口流量
+2、查看dns缓存 如果某站点频繁被访问">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内网渗透技巧：判断机器真实外网IP的5种方法总结">
 <meta property="og:url" content="http://www.rootat.net/2015/11/02/FindNetworkIP/index.html">
 <meta property="og:site_name" content="Zeroh's Blog">
 <meta property="og:description" content="在内网渗透中有时需要在某台WEB服务器中留下后门，该机器可以通过内网IP建立IPC连接，但还需要获知外网IP或域名才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-1、通过nslookup访问上述地址 会回显IP
+1、通过nslookup访问外部地址 回显IP
 nslookup myip.opendns.com resolver1.opendns.com
- 但我多数情况碰到的都是统一的出口流量
-2、查看dns缓存 如果某站点频">
-<meta property="og:updated_time" content="2016-04-21T09:55:00.169Z">
+ 但多数内网都是统一的出口流量
+2、查看dns缓存 如果某站点频繁被访问">
+<meta property="og:updated_time" content="2016-04-21T09:58:57.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内网渗透技巧：判断机器真实外网IP的5种方法总结">
 <meta name="twitter:description" content="在内网渗透中有时需要在某台WEB服务器中留下后门，该机器可以通过内网IP建立IPC连接，但还需要获知外网IP或域名才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：
-1、通过nslookup访问上述地址 会回显IP
+1、通过nslookup访问外部地址 回显IP
 nslookup myip.opendns.com resolver1.opendns.com
- 但我多数情况碰到的都是统一的出口流量
-2、查看dns缓存 如果某站点频">
+ 但多数内网都是统一的出口流量
+2、查看dns缓存 如果某站点频繁被访问">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -193,9 +193,9 @@ nslookup myip.opendns.com resolver1.opendns.com
 
       
         <span itemprop="articleBody"><p>在内网渗透中有时需要在某台WEB服务器中留下后门，该机器可以通过内网IP建立IPC连接，但还需要获知外网IP或域名才能访问Wbshell，在无网关权限的情况下，我总结了有如下方法：</p>
-<p>1、通过nslookup访问上述地址 会回显IP</p>
+<p>1、通过nslookup访问外部地址 回显IP</p>
 <pre><code>nslookup myip<span class="class">.opendns</span><span class="class">.com</span> resolver1<span class="class">.opendns</span><span class="class">.com</span>
-</code></pre><p> 但我多数情况碰到的都是统一的出口流量</p>
+</code></pre><p> 但多数内网都是统一的出口流量</p>
 <p>2、查看dns缓存 如果某站点频繁被访问  相关记录可能会出现在缓存里</p>
 <pre><code><span class="winutils">ipconfig</span> /displaydns 
 </code></pre><p>3、如果是IIS7 IIS7.5：<br>执行如下命令：</p>
